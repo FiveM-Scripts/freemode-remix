@@ -1,0 +1,57 @@
+﻿using CitizenFX.Core;
+using CitizenFX.Core.UI;
+using Freeroam.Utils;
+using System;
+using System.Threading.Tasks;
+
+namespace Freeroam.Crimes
+{
+    class Speeding : BaseScript
+    {
+        private static int MONEY_TIMEUNTILPAYOUT = 5000;
+        private static int MINSPEED = 150;
+
+        private int moneyCountdown = MONEY_TIMEUNTILPAYOUT;
+
+        public Speeding()
+        {
+            Tick += OnTick;
+        }
+
+        private async Task OnTick()
+        {
+            Ped playerPed = Game.PlayerPed;
+            if (playerPed != null && playerPed.IsInVehicle() && !playerPed.IsInHeli && !playerPed.IsInPlane)
+            {
+                Vehicle playerVeh = playerPed.CurrentVehicle;
+                if (Util.GetVehKMHSpeed(playerVeh) > MINSPEED)
+                {
+                    WantedLevelChance();
+
+                    if (moneyCountdown <= 0)
+                    {
+                        Screen.ShowNotification(Strings.CRIME_SPEEDING_PAYOUT);
+                        TriggerEvent(Events.MONEY_ADD, 50);
+                        TriggerEvent(Events.XP_ADD, 5);
+                        moneyCountdown = MONEY_TIMEUNTILPAYOUT;
+                    }
+
+                    moneyCountdown--;
+                }
+                else moneyCountdown = MONEY_TIMEUNTILPAYOUT;
+            }
+
+            await Task.FromResult(0);
+        }
+
+        private void WantedLevelChance()
+        {
+            Vehicle veh = Util.GetClosestVeh(Game.PlayerPed.Position, 20f);
+            if (veh != null)
+            {
+                int chance = new Random().Next(1000);
+                if (chance == 50 && Game.Player.WantedLevel == 0) Game.Player.WantedLevel = 1;
+            }
+        }
+    }
+}
