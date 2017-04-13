@@ -3,3 +3,8 @@ D:\Emre\FiveReborn\servers\DMServer\resources\freeroam\Freeroam.net.pdb
 D:\Emre\Documents\Visual Studio 2015\Projects\Freeroam\Freeroam\obj\Debug\Freeroam.csprojResolveAssemblyReference.cache
 D:\Emre\Documents\Visual Studio 2015\Projects\Freeroam\Freeroam\obj\Debug\Freeroam.net.dll
 D:\Emre\Documents\Visual Studio 2015\Projects\Freeroam\Freeroam\obj\Debug\Freeroam.net.pdb
+D:\Emre\FiveReborn\servers\FiveReborn\servers\DMServer\resources\freeroam\Freeroam.net.dll
+D:\Emre\FiveReborn\servers\FiveReborn\servers\DMServer\resources\freeroam\Freeroam.net.pdb
+D:\Emre\FiveReborn\servers\DMServer\resources\freeroam\Freeroam\Freeroam\obj\Debug\Freeroam.csprojResolveAssemblyReference.cache
+D:\Emre\FiveReborn\servers\DMServer\resources\freeroam\Freeroam\Freeroam\obj\Debug\Freeroam.net.dll
+D:\Emre\FiveReborn\servers\DMServer\resources\freeroam\Freeroam\Freeroam\obj\Debug\Freeroam.net.pdb

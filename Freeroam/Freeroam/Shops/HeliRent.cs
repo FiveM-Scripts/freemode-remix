@@ -1,9 +1,10 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.UI;
+using NativeUI;
 using System.Drawing;
 using System.Threading.Tasks;
 
-namespace Freeroam.Shops.HeliRent
+namespace Freeroam.Shops
 {
     class HeliRent
     {
@@ -12,11 +13,16 @@ namespace Freeroam.Shops.HeliRent
         private Vector3 pos;
         public Vector3 POS { get { return pos; }}
 
+        private MenuPool menuPool = new MenuPool();
+        private UIMenu rentMenu;
         private Vehicle currentHeli;
 
         public HeliRent(Vector3 pos)
         {
             this.pos = pos;
+
+            rentMenu = new UIMenu("Heli Rent", "Choose a Helicopter");
+            menuPool.Add(rentMenu);
 
             Blip blip = World.CreateBlip(pos);
             blip.Sprite = BlipSprite.Helicopter;
@@ -33,10 +39,16 @@ namespace Freeroam.Shops.HeliRent
             Ped playerPed = Game.PlayerPed;
             if (playerPed != null)
             {
+                menuPool.ProcessMenus();
                 if (World.GetDistance(playerPed.Position, pos) < MARKER_SCALE)
                 {
-                    Screen.DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to open rent menu.");
+                    if (!rentMenu.Visible)
+                    {
+                        Screen.DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to open rent menu.");
+                        if (Game.IsControlJustReleased(1, Control.Context)) rentMenu.Visible = true;
+                    }
                 }
+                else rentMenu.Visible = false;
             }
         }
     }
