@@ -9,5 +9,7 @@
 
         public static string XP_ADD { get { return "freeroam:addxp"; } }
         public static string XP_GET { get { return "freeroam:getxp"; } }
+
+        public static string PLAYERSKIN_CHANGE { get { return "freeroam:changeskin"; } }
     }
 }

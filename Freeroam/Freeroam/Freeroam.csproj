@@ -52,12 +52,13 @@
     <Compile Include="Crimes\Speeding.cs" />
     <Compile Include="DebugPos.cs" />
     <Compile Include="Freeroam.cs" />
+    <Compile Include="Holders\PlayerSkin.cs" />
     <Compile Include="InteractionMenu.cs" />
-    <Compile Include="Progress\Level.cs" />
+    <Compile Include="Holders\Level.cs" />
     <Compile Include="Shops\HeliRent.cs" />
     <Compile Include="Utils\EntityDecoration.cs" />
     <Compile Include="Utils\Events.cs" />
-    <Compile Include="Progress\Money.cs" />
+    <Compile Include="Holders\Money.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Storage.cs" />
     <Compile Include="Utils\Strings.cs" />

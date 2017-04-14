@@ -5,7 +5,7 @@ using System;
 using System.Drawing;
 using System.Threading.Tasks;
 
-namespace Freeroam.Progress
+namespace Freeroam.Holders
 {
     public class Money : BaseScript
     {

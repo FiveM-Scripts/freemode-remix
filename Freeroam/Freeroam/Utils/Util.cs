@@ -25,6 +25,18 @@ namespace Freeroam.Utils
             return new Ped(pedId);
         }
 
+        public async static Task ChangePlayerSkin(Model newSkin)
+        {
+            int hash = newSkin.Hash;
+            Function.Call(Hash.REQUEST_MODEL, hash);
+            while (!Function.Call<bool>(Hash.HAS_MODEL_LOADED, hash))
+            {
+                await Delay(1);
+            }
+
+            Function.Call(Hash.SET_PLAYER_MODEL, Game.Player.Handle, hash);
+        }
+
         public static void GetClosestVehNode(Vector3 pos, out Vector3 outPos, out float outHeading)
         {
             OutputArgument resultPos = new OutputArgument();
