@@ -40,6 +40,9 @@ namespace Freeroam
         {
             UIMenu skinMenu = menuPool.AddSubMenu(interactionMenu, Strings.INTERACTIONMENU_PLAYERSKIN_SUBTITLE);
 
+            UIMenuItem skinSearchItem = new UIMenuItem(Strings.INTERACTIONMENU_PLAYERSKIN_SEARCH);
+            skinMenu.AddItem(skinSearchItem);
+
             string[] pedModelNames = Enum.GetNames(typeof(PedHash));
             Array.Sort(pedModelNames, (x, y) => string.Compare(x, y));
             foreach (string pedHashName in pedModelNames)

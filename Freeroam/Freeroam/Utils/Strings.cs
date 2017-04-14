@@ -23,6 +23,7 @@
 
         public static string INTERACTIONMENU_PLAYERSKIN { get { return "Player Skin"; } }
         public static string INTERACTIONMENU_PLAYERSKIN_SUBTITLE { get { return "Change your skin"; } }
+        public static string INTERACTIONMENU_PLAYERSKIN_SEARCH { get { return "Search"; } }
         public static string INTERACTIONMENU_PLAYERSKIN_CHANGED { get { return "Changed Player model."; } }
     }
 }
