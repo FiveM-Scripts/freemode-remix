@@ -87,5 +87,28 @@ namespace Freeroam.Utils
             int closestVeh = Function.Call<int>(Hash.GET_CLOSEST_VEHICLE, pos.X, pos.Y, pos.Z, radius, model, 0);
             return closestVeh == 0 ? null : new Vehicle(closestVeh);
         }
+
+        public static async Task<string> GetUserInput(WindowTitle windowTitle = WindowTitle.FMMC_KEY_TIP8, string defaultText = null, int maxLength = 30)
+        {
+            string result = null;
+            // Cancelling throws an exception :/
+            try
+            {
+                result = await Game.GetUserInput(windowTitle, defaultText, maxLength);
+            }
+            catch {}
+
+            return result;
+        }
+
+        public static string GetDisplayNameFromVehicleModel(Model model)
+        {
+            return Function.Call<string>(Hash.GET_DISPLAY_NAME_FROM_VEHICLE_MODEL, model.Hash);
+        }
+
+        public static string GetLabelText(string labelName)
+        {
+            return Function.Call<string>(Hash._GET_LABEL_TEXT, labelName);
+        }
     }
 }

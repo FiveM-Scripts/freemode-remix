@@ -11,6 +11,7 @@ namespace Freeroam
     {
         private MenuPool menuPool;
         private UIMenu interactionMenu;
+        private bool drawMenu = true;
 
         public InteractionMenu()
         {
@@ -27,10 +28,13 @@ namespace Freeroam
 
         private async Task OnTick()
         {
-            menuPool.ProcessMenus();
-            if (Game.IsControlJustReleased(1, Control.InteractionMenu))
+            if (drawMenu)
             {
-                interactionMenu.Visible = !interactionMenu.Visible;
+                menuPool.ProcessMenus();
+                if (Game.IsControlJustReleased(1, Control.InteractionMenu))
+                {
+                    interactionMenu.Visible = !interactionMenu.Visible;
+                }
             }
 
             await Task.FromResult(0);
@@ -53,12 +57,24 @@ namespace Freeroam
 
             skinMenu.RefreshIndex();
 
-            skinMenu.OnItemSelect += (sender, item, index) =>
+            skinMenu.OnItemSelect += async (sender, item, index) =>
             {
+                drawMenu = false;
+
+                string pedModelName = item.Text;
+                if (item.Text == Strings.INTERACTIONMENU_PLAYERSKIN_SEARCH) pedModelName = await Util.GetUserInput();
+
                 PedHash selectedPedModel;
-                Enum.TryParse(item.Text, out selectedPedModel);
-                Screen.ShowNotification("~g~" + Strings.INTERACTIONMENU_PLAYERSKIN_CHANGED);
-                TriggerEvent(Events.PLAYERSKIN_CHANGE, (int) selectedPedModel);
+                if (!Enum.TryParse(pedModelName, out selectedPedModel)) Screen.ShowNotification("~r~" + Strings.INTERACTIONMENU_PLAYERSKIN_INVALID);
+                else
+                {
+                    Screen.ShowNotification("~g~" + Strings.INTERACTIONMENU_PLAYERSKIN_CHANGING);
+
+                    Vehicle currentVeh = Game.PlayerPed.CurrentVehicle;
+                    TriggerEvent(Events.PLAYERSKIN_CHANGE, (int)selectedPedModel, currentVeh == null ? 0 : currentVeh.Handle);
+                }
+
+                drawMenu = true;
             };
         }
 

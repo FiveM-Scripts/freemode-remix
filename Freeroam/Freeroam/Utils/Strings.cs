@@ -11,6 +11,8 @@
 
         public static string CRIME_SPEEDING_PAYOUT { get { return "Speeding Bonus!"; } }
 
+        public static string CRIME_STUNTING_PAYOUT { get { return "Airtime Bonus!"; } }
+
         /* INTERACTION MENU */
 
         public static string INTERACTIONMENU_MAIN_TITLE { get { return "Freeroam"; } }
@@ -24,6 +26,7 @@
         public static string INTERACTIONMENU_PLAYERSKIN { get { return "Player Skin"; } }
         public static string INTERACTIONMENU_PLAYERSKIN_SUBTITLE { get { return "Change your skin"; } }
         public static string INTERACTIONMENU_PLAYERSKIN_SEARCH { get { return "Search"; } }
-        public static string INTERACTIONMENU_PLAYERSKIN_CHANGED { get { return "Changed Player model."; } }
+        public static string INTERACTIONMENU_PLAYERSKIN_CHANGING { get { return "Changing Player model..."; } }
+        public static string INTERACTIONMENU_PLAYERSKIN_INVALID { get { return "Invalid Player model."; } }
     }
 }

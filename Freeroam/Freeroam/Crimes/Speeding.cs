@@ -21,7 +21,8 @@ namespace Freeroam.Crimes
         private async Task OnTick()
         {
             Ped playerPed = Game.PlayerPed;
-            if (playerPed != null && playerPed.IsInVehicle() && !playerPed.IsInHeli && !playerPed.IsInPlane)
+            if (playerPed != null && playerPed.IsInVehicle() && playerPed.CurrentVehicle.Driver == playerPed && !playerPed.IsInHeli
+                && !playerPed.IsInPlane && !playerPed.IsInBoat)
             {
                 Vehicle playerVeh = playerPed.CurrentVehicle;
                 if (Util.GetVehKMHSpeed(playerVeh) > MINSPEED)
@@ -47,7 +48,7 @@ namespace Freeroam.Crimes
         private void WantedLevelChance()
         {
             Vehicle veh = Util.GetClosestVeh(Game.PlayerPed.Position, 20f);
-            if (veh != null)
+            if (veh != null && veh.Driver != null)
             {
                 int chance = new Random().Next(1000);
                 if (chance == 50 && Game.Player.WantedLevel == 0) Game.Player.WantedLevel = 1;
