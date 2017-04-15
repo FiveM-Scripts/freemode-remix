@@ -7,26 +7,41 @@ using System.Threading.Tasks;
 
 namespace Freeroam.Shops
 {
+    internal struct BuyableHeli
+    {
+        public VehicleHash MODEL { get; private set; }
+        public int PRICE { get; private set; }
+        public string DISPLAY_NAME { get; private set; }
+
+        public BuyableHeli(VehicleHash model, int price)
+        {
+            MODEL = model;
+            PRICE = price;
+
+            string labelName = Util.GetDisplayNameFromVehicleModel(model);
+            DISPLAY_NAME = Util.GetLabelText(labelName);
+        }
+    }
+
     internal class HeliRent
     {
-        private static VehicleHash[] buyableHelis = new VehicleHash[]
+        private static BuyableHeli[] buyableHelis = new BuyableHeli[]
         {
-            VehicleHash.Maverick,
-            VehicleHash.Buzzard2,
-            VehicleHash.Buzzard
+            new BuyableHeli(VehicleHash.Maverick, 150),
+            new BuyableHeli(VehicleHash.Buzzard2, 200),
+            new BuyableHeli(VehicleHash.Buzzard, 350)
         };
 
         private static float MARKER_SCALE { get { return 2f; } }
 
-        private Vector3 pos;
-        public Vector3 POS { get { return pos; } }
+        public Vector3 POSITION { get; private set; }
 
         private MenuPool menuPool = new MenuPool();
         private UIMenu rentMenu;
 
         public HeliRent(Vector3 pos)
         {
-            this.pos = pos;
+            POSITION = pos;
 
             rentMenu = new UIMenu("Heli Rent", "Choose a Helicopter");
             menuPool.Add(rentMenu);
@@ -42,12 +57,10 @@ namespace Freeroam.Shops
 
         private void AddMenuHeliItems()
         {
-            foreach (VehicleHash heliHash in buyableHelis)
+            foreach (BuyableHeli buyableHeli in buyableHelis)
             {
-                string labelName = Util.GetDisplayNameFromVehicleModel(heliHash);
-                string labelText = Util.GetLabelText(labelName);
-
-                UIMenuItem heliItem = new UIMenuItem(labelText);
+                UIMenuItem heliItem = new UIMenuItem(buyableHeli.DISPLAY_NAME);
+                heliItem.SetRightLabel(buyableHeli.PRICE + "$");
                 rentMenu.AddItem(heliItem);
             }
 
@@ -60,7 +73,7 @@ namespace Freeroam.Shops
             Vector3 spawnPos; float spawnHeading;
             Util.GetClosestVehNode(playerPos, out spawnPos, out spawnHeading, 20);
 
-            Vehicle heli = await World.CreateVehicle(buyableHelis[index], spawnPos, spawnHeading);
+            Vehicle heli = await World.CreateVehicle(buyableHelis[index].MODEL, spawnPos, spawnHeading);
             Blip heliBlip = heli.AttachBlip();
             heliBlip.Sprite = BlipSprite.Helicopter;
             heliBlip.Name = "Rented Heli";
@@ -72,14 +85,14 @@ namespace Freeroam.Shops
 
         public void Tick()
         {
-            World.DrawMarker(MarkerType.VerticalCylinder, new Vector3(pos.X, pos.Y, pos.Z - 1f), new Vector3(), new Vector3(),
-                new Vector3(MARKER_SCALE), Color.FromArgb(255, 0, 0, 255));
-
             Ped playerPed = Game.PlayerPed;
             if (playerPed != null)
             {
+                World.DrawMarker(MarkerType.VerticalCylinder, new Vector3(POSITION.X, POSITION.Y, POSITION.Z - 1f), new Vector3(), new Vector3(),
+                    new Vector3(MARKER_SCALE), Color.FromArgb(255, 0, 0, 255));
+
                 menuPool.ProcessMenus();
-                if (World.GetDistance(playerPed.Position, pos) < MARKER_SCALE)
+                if (World.GetDistance(playerPed.Position, POSITION) < MARKER_SCALE)
                 {
                     if (!rentMenu.Visible)
                     {
@@ -96,7 +109,7 @@ namespace Freeroam.Shops
     {
         public static HeliRent[] heliRents = new HeliRent[]
         {
-            new HeliRent(new Vector3(1214.908f, -3077.384f, 5.898481f))
+            new HeliRent(new Vector3(1215.608f, -3076.717f, 5.897452f))
         };
 
         public HeliRents()
