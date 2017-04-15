@@ -35,7 +35,7 @@ namespace Freeroam.Holders
             EventHandlers[Events.MONEY_ADD] += new Action<int>(AddMoney);
             EventHandlers[Events.MONEY_REMOVE] += new Action<int>(RemoveMoney);
             EventHandlers[Events.MONEY_GET] += new Action<Action<int>>(GetMoney);
-            EventHandlers[Events.MONEY_HASENOUGH] += new Action<Action<int>>(GetMoney);
+            EventHandlers[Events.MONEY_HASENOUGH] += new Action<int, Action<bool>>(HasEnoughMoney);
 
             Tick += OnTick;
         }
@@ -55,11 +55,16 @@ namespace Freeroam.Holders
             drawingText.Caption = $"{newMoney} $";
             moneyChangeTextAmount = newMoney - money;
 
-            if (moneyChangeTextAmount > 0) moneyChangeText.Caption = $"+ {moneyChangeTextAmount}$";
-            else moneyChangeText.Caption = $"- {moneyChangeTextAmount}$";
-
-            if (newMoney > 0) moneyChangeText.Color = Color.FromArgb(255, 0, 153, 0);
-            else moneyChangeText.Color = Color.FromArgb(255, 153, 0, 0);
+            if (moneyChangeTextAmount > 0)
+            {
+                moneyChangeText.Caption = $"+ {moneyChangeTextAmount}$";
+                moneyChangeText.Color = Color.FromArgb(255, 0, 153, 0);
+            }
+            else
+            {
+                moneyChangeText.Caption = $"- {moneyChangeTextAmount * -1}$";
+                moneyChangeText.Color = Color.FromArgb(255, 153, 0, 0);
+            }
 
             moneyChangeTextShowProgress = 0;
 

@@ -2,6 +2,7 @@
 using CitizenFX.Core.UI;
 using Freeroam.Utils;
 using NativeUI;
+using System;
 using System.Drawing;
 using System.Threading.Tasks;
 
@@ -69,6 +70,10 @@ namespace Freeroam.Shops
 
         private async void OnItemSelect(dynamic sender, UIMenuItem item, int index)
         {
+            int price = buyableHelis[index].PRICE;
+            BaseScript.TriggerEvent(Events.MONEY_REMOVE, price);
+            BaseScript.TriggerEvent(Events.XP_ADD, 1);
+
             Vector3 playerPos = Game.PlayerPed.Position;
             Vector3 spawnPos; float spawnHeading;
             Util.GetClosestVehNode(playerPos, out spawnPos, out spawnHeading, 20);
