@@ -14,7 +14,7 @@ namespace Freeroam
 
         private async Task OnTick()
         {
-            if (Game.IsControlJustReleased(1, Control.MultiplayerInfo))
+            if (Game.IsControlJustReleased(1, Control.EnterCheatCode))
             {
                 Vector3 playerPos = Game.PlayerPed.Position;
                 TriggerEvent("chatMessage", "", new[] { 0, 0, 0 }, $"{playerPos.X} {playerPos.Y} {playerPos.Z}");

@@ -1,6 +1,7 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.UI;
 using Freeroam.Utils;
+using NativeUI;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -9,59 +10,49 @@ namespace Freeroam.Holders
 {
     class Level : BaseScript
     {
-        private Text drawingText;
-
-        private int xp;
-        private int lvl;
+        public static int XP { get; private set; }
+        public static int LVL { get; private set; }
 
         public Level()
         {
-            xp = Storage.GetInt(Storage.XP);
-            if (xp == 0) xp = 1;
+            XP = Storage.GetInt(Storage.XP);
+            if (XP == 0) XP = 1;
 
-            lvl = (int)Math.Ceiling((double)xp / 50);
-
-            PointF drawingTextPos = new PointF(220f, 580f);
-            float drawingTextScale = 0.6f;
-            Color drawingTextColor = Color.FromArgb(255, 102, 178, 255);
-            Font drawingTextFont = Font.ChaletComprimeCologne;
-            Alignment drawingTextAlign = Alignment.Left;
-            drawingText = new Text($"{Strings.LEVEL} {lvl}", drawingTextPos, drawingTextScale, drawingTextColor, drawingTextFont, drawingTextAlign, true, true);
+            LVL = (int)Math.Ceiling((double)XP / 50);
 
             EventHandlers[Events.XP_ADD] += new Action<int>(AddXP);
-            EventHandlers[Events.XP_GET] += new Action<Action<int>>(GetXP);
 
             Tick += OnTick;
         }
 
         private void AddXP(int amount)
         {
-            SetXP(xp + amount);
+            SetXP(XP + amount);
         }
 
         private void SetXP(int newXP)
         {
-            xp = newXP;
+            XP = newXP;
 
-            int prevLvl = lvl;
-            lvl = (int)Math.Ceiling((double)xp / 50);
-            if (lvl > prevLvl) Screen.ShowNotification("~b~" + Strings.LEVEL_UP);
+            int prevLvl = LVL;
+            LVL = (int)Math.Ceiling((double)XP / 50);
+            if (LVL > prevLvl) Screen.ShowNotification("~b~" + Strings.LEVEL_UP);
 
-            drawingText.Caption = $"{Strings.LEVEL} {lvl}";
-
-            Storage.SetInt(Storage.XP, xp);
-        }
-
-        private void GetXP(Action<int> cb)
-        {
-            cb(xp);
+            Storage.SetInt(Storage.XP, XP);
         }
 
         private async Task OnTick()
         {
-            drawingText.Draw();
+            DrawLevelText();
 
             await Task.FromResult(0);
+        }
+
+        private void DrawLevelText()
+        {
+            UIResText levelText = new UIResText($"{Strings.LEVEL} {LVL}", new PointF(220f, 580f), 0.6f, Color.FromArgb(255, 102, 178, 255),
+                Font.ChaletComprimeCologne, UIResText.Alignment.Left);
+            levelText.Draw();
         }
     }
 }

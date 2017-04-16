@@ -1,7 +1,7 @@
 ﻿using CitizenFX.Core;
-using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Freeroam.Utils;
+using NativeUI;
 using System;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -10,51 +10,65 @@ namespace Freeroam.Holders
 {
     public class Money : BaseScript
     {
-        private Text drawingText;
-
-        private Text moneyChangeText;
         private int moneyChangeTextAmount;
         private int moneyChangeTextShowProgress;
 
-        private int money;
+        public static int MONEY { get; private set; }
 
         public Money()
         {
-            money = Storage.GetInt(Storage.MONEY);
-
-            PointF drawingTextPos = new PointF(220f, 680f);
-            float drawingTextScale = 0.7f;
-            Color drawingTextColor = Color.FromArgb(255, 0, 153, 0);
-            Font drawingTextFont = Font.ChaletComprimeCologne;
-            Alignment drawingTextAlign = Alignment.Left;
-            drawingText = new Text($"{money} $", drawingTextPos, drawingTextScale, drawingTextColor, drawingTextFont, drawingTextAlign, true, true);
-
-            float moneyChangeTextScale = 0.5f;
-            moneyChangeText = new Text("", new PointF(drawingTextPos.X, drawingTextPos.Y - 25f), moneyChangeTextScale,
-                Color.Empty, drawingTextFont, drawingTextAlign, true, true);
+            MONEY = Storage.GetInt(Storage.MONEY);
 
             EventHandlers[Events.MONEY_ADD] += new Action<int>(AddMoney);
             EventHandlers[Events.MONEY_REMOVE] += new Action<int>(RemoveMoney);
-            //EventHandlers[Events.MONEY_GET] += new Action<int>(GetMoney);
-            EventHandlers[Events.MONEY_HASENOUGH] += new Action<int, Action<bool>>(HasEnoughMoney);
 
             Tick += OnTick;
         }
 
         private void AddMoney(int amount)
         {
-            SetMoney(money + amount);
+            SetMoney(MONEY + amount);
         }
 
         private void RemoveMoney(int amount)
         {
-            SetMoney(money - amount);
+            SetMoney(MONEY - amount);
         }
 
         private void SetMoney(int newMoney)
         {
-            drawingText.Caption = $"{newMoney} $";
-            moneyChangeTextAmount = newMoney - money;
+            moneyChangeTextAmount = newMoney - MONEY;
+            moneyChangeTextShowProgress = 0;
+
+            MONEY = newMoney < 0 ? 0 : newMoney;
+            Storage.SetInt(Storage.MONEY, MONEY);
+        }
+
+        private async Task OnTick()
+        {
+            DrawMoneyText();
+
+            if (moneyChangeTextShowProgress < 300)
+            {
+                DrawMoneyChangeText();
+                moneyChangeTextShowProgress++;
+            }
+
+            await Task.FromResult(0);
+        }
+
+        private void DrawMoneyText()
+        {
+            UIResText moneyText = new UIResText($"{MONEY} $", new PointF(280f, 680f), 0.7f, Color.FromArgb(255, 0, 153, 0),
+                Font.ChaletComprimeCologne, UIResText.Alignment.Left);
+            moneyText.DropShadow = true;
+            moneyText.Draw();
+        }
+
+        private void DrawMoneyChangeText()
+        {
+            UIResText moneyChangeText = new UIResText("", new PointF(220f, 655f), 0.5f, Color.Empty,
+                Font.ChaletComprimeCologne, UIResText.Alignment.Left);
 
             if (moneyChangeTextAmount > 0)
             {
@@ -67,33 +81,7 @@ namespace Freeroam.Holders
                 moneyChangeText.Color = Color.FromArgb(255, 153, 0, 0);
             }
 
-            moneyChangeTextShowProgress = 0;
-
-            money = newMoney < 0 ? 0 : newMoney;
-            Storage.SetInt(Storage.MONEY, money);
-        }
-
-        private void GetMoney(out int money)
-        {
-            money = this.money;
-        }
-
-        private void HasEnoughMoney(int amount, Action<bool> cb)
-        {
-            cb(money - amount >= 0);
-        }
-
-        private async Task OnTick()
-        {
-            drawingText.Draw();
-
-            if (moneyChangeTextShowProgress < 300)
-            {
-                moneyChangeText.Draw();
-                moneyChangeTextShowProgress++;
-            }
-
-            await Task.FromResult(0);
+            moneyChangeText.Draw();
         }
     }
 }

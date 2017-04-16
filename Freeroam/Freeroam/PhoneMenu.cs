@@ -25,7 +25,8 @@ namespace Freeroam
 
         private void AddSomeMenuLater()
         {
-            // TODO: Change this
+            // TODO: Change this (copied over)
+
             UIMenu aboutMenu = menuPool.AddSubMenu(interactionMenu, Strings.INTERACTIONMENU_ABOUT);
 
             UIMenuItem versionItem = new UIMenuItem(Strings.INTERACTIONMENU_ABOUT_VERSION);
