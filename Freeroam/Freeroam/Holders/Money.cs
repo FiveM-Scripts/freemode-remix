@@ -1,4 +1,5 @@
 ﻿using CitizenFX.Core;
+using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Freeroam.Utils;
 using System;
@@ -34,7 +35,7 @@ namespace Freeroam.Holders
 
             EventHandlers[Events.MONEY_ADD] += new Action<int>(AddMoney);
             EventHandlers[Events.MONEY_REMOVE] += new Action<int>(RemoveMoney);
-            EventHandlers[Events.MONEY_GET] += new Action<Action<int>>(GetMoney);
+            //EventHandlers[Events.MONEY_GET] += new Action<int>(GetMoney);
             EventHandlers[Events.MONEY_HASENOUGH] += new Action<int, Action<bool>>(HasEnoughMoney);
 
             Tick += OnTick;
@@ -72,9 +73,9 @@ namespace Freeroam.Holders
             Storage.SetInt(Storage.MONEY, money);
         }
 
-        private void GetMoney(Action<int> cb)
+        private void GetMoney(out int money)
         {
-            cb(money);
+            money = this.money;
         }
 
         private void HasEnoughMoney(int amount, Action<bool> cb)

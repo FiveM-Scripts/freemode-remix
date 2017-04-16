@@ -26,20 +26,6 @@ namespace Freeroam
             Tick += OnTick;
         }
 
-        private async Task OnTick()
-        {
-            if (drawMenu)
-            {
-                menuPool.ProcessMenus();
-                if (Game.IsControlJustReleased(1, Control.InteractionMenu))
-                {
-                    interactionMenu.Visible = !interactionMenu.Visible;
-                }
-            }
-
-            await Task.FromResult(0);
-        }
-
         private void AddPlayerSkinSubMenu()
         {
             UIMenu skinMenu = menuPool.AddSubMenu(interactionMenu, Strings.INTERACTIONMENU_PLAYERSKIN_SUBTITLE);
@@ -87,6 +73,20 @@ namespace Freeroam
 
             UIMenuItem authorItem = new UIMenuItem(Strings.INTERACTIONMENU_ABOUT_AUTHOR, Strings.INTERACTIONMENU_ABOUT_AUTHOR_DESC);
             aboutMenu.AddItem(authorItem);
+        }
+
+        private async Task OnTick()
+        {
+            if (drawMenu)
+            {
+                menuPool.ProcessMenus();
+                if (Game.IsControlJustReleased(1, Control.InteractionMenu))
+                {
+                    interactionMenu.Visible = !interactionMenu.Visible;
+                }
+            }
+
+            await Task.FromResult(0);
         }
     }
 }

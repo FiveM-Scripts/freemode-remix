@@ -28,5 +28,10 @@
         public static string INTERACTIONMENU_PLAYERSKIN_SEARCH { get { return "Search"; } }
         public static string INTERACTIONMENU_PLAYERSKIN_CHANGING { get { return "Changing Player model..."; } }
         public static string INTERACTIONMENU_PLAYERSKIN_INVALID { get { return "Invalid Player model."; } }
+
+        /* PHONE MENU */
+
+        public static string PHONEMENU_MAIN_TITLE { get { return "KangOS 0.2.4"; } }
+        public static string PHONEMENU_MAIN_SUBTITLE { get { return "Main Menu"; } }
     }
 }
