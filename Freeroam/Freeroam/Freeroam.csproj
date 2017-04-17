@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Crimes\Speeding.cs" />
     <Compile Include="Crimes\Stunting.cs" />
+    <Compile Include="Crimes\WantedLevelEscape.cs" />
     <Compile Include="DeathAnim.cs" />
     <Compile Include="DebugPos.cs" />
     <Compile Include="Freeroam.cs" />

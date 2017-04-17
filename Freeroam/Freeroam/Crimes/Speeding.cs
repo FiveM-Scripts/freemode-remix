@@ -32,8 +32,8 @@ namespace Freeroam.Crimes
                     if (moneyCountdown <= 0)
                     {
                         Screen.ShowNotification(Strings.CRIME_SPEEDING_PAYOUT);
-                        TriggerEvent(Events.MONEY_ADD, 50);
-                        TriggerEvent(Events.XP_ADD, 5);
+                        TriggerEvent(Events.MONEY_ADD, 100);
+                        TriggerEvent(Events.XP_ADD, 7);
                         moneyCountdown = MONEY_TIMEUNTILPAYOUT;
                     }
 
