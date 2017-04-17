@@ -10,10 +10,13 @@ namespace Freeroam.Holders
 {
     class Level : BaseScript
     {
-        public const string PNAME_LEVEL = "_PLAYER_LEVEL";
+        private const string PNAME_LEVEL = "_PLAYER_LEVEL";
+        private const int DECOR_LEVEL_TIMEUNTILUPDATE = 20;
 
         public static int XP { get; private set; }
         public static int LVL { get; private set; }
+
+        private int lvlDecorTimeUntilUpdate;
 
         public Level()
         {
@@ -55,7 +58,12 @@ namespace Freeroam.Holders
         {
             DrawLevelText();
 
-            if (Game.PlayerPed != null) EntityDecoration.Set(Game.PlayerPed, PNAME_LEVEL, LVL);
+            lvlDecorTimeUntilUpdate--;
+            if (lvlDecorTimeUntilUpdate <= 0)
+            {
+                UpdateLevelDecor();
+                lvlDecorTimeUntilUpdate = DECOR_LEVEL_TIMEUNTILUPDATE;
+            }
 
             await Task.FromResult(0);
         }
@@ -66,6 +74,15 @@ namespace Freeroam.Holders
                 Font.ChaletComprimeCologne, UIResText.Alignment.Left);
             levelText.DropShadow = true;
             levelText.Draw();
+        }
+
+        private void UpdateLevelDecor()
+        {
+            if (Game.PlayerPed != null && !EntityDecoration.ExistOn(Game.PlayerPed, PNAME_LEVEL)
+                || EntityDecoration.Get<int>(Game.PlayerPed, PNAME_LEVEL) != LVL)
+            {
+                EntityDecoration.Set(Game.PlayerPed, PNAME_LEVEL, LVL);
+            }
         }
     }
 }

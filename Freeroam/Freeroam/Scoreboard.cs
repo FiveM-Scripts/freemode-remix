@@ -13,8 +13,8 @@ namespace Freeroam
         private const float POS_Y = 50f;
         private const float SCOREBOARD_LENGTH = 400f;
 
-        private const float TITLE_HEIGHT = 50f;
-        private const float PLAYERITEM_HEIGHT = 60f;
+        private const float TITLE_HEIGHT = 35f;
+        private const float PLAYERITEM_HEIGHT = 50f;
 
         private bool drawScoreboard = false;
 
@@ -51,18 +51,19 @@ namespace Freeroam
 
             int playerAmount = 0;
             foreach (Player player in Players) playerAmount++;
-            UIResText titleText = new UIResText($"{playerAmount} Players", new PointF(POS_X + 5f, POS_Y + 5f), 0.5f);
+            UIResText titleText = new UIResText($"{playerAmount} Players", new PointF(POS_X + 5f, POS_Y + 2f), 0.4f);
             titleText.Draw();
         }
 
         private void DrawPlayerItems()
         {
             float nextPosY = POS_Y + TITLE_HEIGHT;
-            foreach (Player player in Players)
+            foreach (CachedPlayer cachedPlayer in CachedPlayers.PLAYERS)
             {
+                Player player = cachedPlayer.PLAYER;
                 DrawPlayerRec(player, POS_X, nextPosY);
-                DrawPlayerName(player, POS_X + 5f, nextPosY + 10f);
-                DrawPlayerLevel(player, POS_X + 290f, nextPosY + 10f);
+                DrawPlayerName(player, POS_X + 5f, nextPosY + 7f);
+                DrawPlayerLevel(player, POS_X + 290f, nextPosY + 7f);
 
                 nextPosY += PLAYERITEM_HEIGHT;
             }
@@ -78,7 +79,7 @@ namespace Freeroam
 
         private void DrawPlayerName(Player player, float x, float y)
         {
-            UIResText playerNameText = new UIResText(player.Name, new PointF(x, y), 0.5f);
+            UIResText playerNameText = new UIResText(player.Name, new PointF(x, y), 0.45f);
             playerNameText.DropShadow = true;
             playerNameText.Draw();
         }
@@ -86,7 +87,7 @@ namespace Freeroam
         private void DrawPlayerLevel(Player player, float x, float y)
         {
             int playerLVL = Level.GetPlayerLVL(player);
-            UIResText playerNameText = new UIResText($"LVL {playerLVL}", new PointF(x, y), 0.5f, Color.FromArgb(255, 102, 178, 255));
+            UIResText playerNameText = new UIResText($"LVL {playerLVL}", new PointF(x, y), 0.45f, Color.FromArgb(255, 102, 178, 255));
             playerNameText.DropShadow = true;
             playerNameText.Draw();
         }

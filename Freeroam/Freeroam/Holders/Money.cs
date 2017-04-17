@@ -10,8 +10,10 @@ namespace Freeroam.Holders
 {
     public class Money : BaseScript
     {
-        public const string PNAME_MONEY = "_PLAYER_MONEY";
+        private const string PNAME_MONEY = "_PLAYER_MONEY";
+        private const int DECOR_MONEY_TIMEUNTILUPDATE = 20;
 
+        private int moneyDecorTimeUntilUpdate;
         private int moneyChangeTextAmount;
         private int moneyChangeTextShowProgress;
 
@@ -23,6 +25,8 @@ namespace Freeroam.Holders
 
             EventHandlers[Events.MONEY_ADD] += new Action<int>(AddMoney);
             EventHandlers[Events.MONEY_REMOVE] += new Action<int>(RemoveMoney);
+
+            EntityDecoration.RegisterProperty(PNAME_MONEY, DecorationType.Int);
 
             Tick += OnTick;
         }
@@ -63,6 +67,13 @@ namespace Freeroam.Holders
                 moneyChangeTextShowProgress--;
             }
 
+            moneyDecorTimeUntilUpdate--;
+            if (moneyDecorTimeUntilUpdate <= 0)
+            {
+                UpdateMoneyDecor();
+                moneyDecorTimeUntilUpdate = DECOR_MONEY_TIMEUNTILUPDATE;
+            }
+
             await Task.FromResult(0);
         }
 
@@ -91,6 +102,15 @@ namespace Freeroam.Holders
             }
 
             moneyChangeText.Draw();
+        }
+
+        private void UpdateMoneyDecor()
+        {
+            if (Game.PlayerPed != null && !EntityDecoration.ExistOn(Game.PlayerPed, PNAME_MONEY)
+                || EntityDecoration.Get<int>(Game.PlayerPed, PNAME_MONEY) != MONEY)
+            {
+                EntityDecoration.Set(Game.PlayerPed, PNAME_MONEY, MONEY);
+            }
         }
     }
 }

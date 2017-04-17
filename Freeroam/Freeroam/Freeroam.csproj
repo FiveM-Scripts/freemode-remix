@@ -59,6 +59,7 @@
     <Compile Include="PhoneMenu.cs" />
     <Compile Include="Scoreboard.cs" />
     <Compile Include="Shops\HeliRent.cs" />
+    <Compile Include="Utils\CachedPlayers.cs" />
     <Compile Include="Utils\EntityDecoration.cs" />
     <Compile Include="Utils\Events.cs" />
     <Compile Include="Holders\Money.cs" />
