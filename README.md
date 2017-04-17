@@ -1,5 +1,5 @@
 # freemode-remix
-Alternative Freeroam Gamemode that works without any Database.
+Alternative Freeroam Gamemode that works without any Database. Aims to be kinda like GTA:O Freemode.
 
 **Installation:**
 1. Download this (Clone or Download -> Download ZIP).
