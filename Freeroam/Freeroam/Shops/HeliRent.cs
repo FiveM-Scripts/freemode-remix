@@ -119,7 +119,7 @@ namespace Freeroam.Shops
 
         public HeliRents()
         {
-            Tick += OnTick;
+            //Tick += OnTick;
         }
 
         private async Task OnTick()

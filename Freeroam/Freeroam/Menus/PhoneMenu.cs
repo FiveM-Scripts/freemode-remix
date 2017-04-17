@@ -1,11 +1,10 @@
 ﻿using CitizenFX.Core;
-using CitizenFX.Core.UI;
 using Freeroam.Utils;
 using NativeUI;
 using System.Drawing;
 using System.Threading.Tasks;
 
-namespace Freeroam
+namespace Freeroam.Menus
 {
     class PhoneMenu : BaseScript
     {
@@ -14,13 +13,13 @@ namespace Freeroam
 
         public PhoneMenu()
         {
-            menuPool = new MenuPool();
+            /*menuPool = new MenuPool();
 
             interactionMenu = new UIMenu(Strings.PHONEMENU_MAIN_TITLE, "~g~" + Strings.PHONEMENU_MAIN_SUBTITLE);
             interactionMenu.SetBannerType(new UIResRectangle(new PointF(), new SizeF(100f, 100f), Color.FromArgb(255, 0, 156, 0)));
             menuPool.Add(interactionMenu);
 
-            Tick += OnTick;
+            Tick += OnTick;*/
         }
 
         private void AddSomeMenuLater()

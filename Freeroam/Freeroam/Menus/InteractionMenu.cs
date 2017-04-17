@@ -5,7 +5,7 @@ using NativeUI;
 using System;
 using System.Threading.Tasks;
 
-namespace Freeroam
+namespace Freeroam.Menus
 {
     class InteractionMenu : BaseScript
     {

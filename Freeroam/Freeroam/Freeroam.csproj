@@ -51,12 +51,14 @@
   <ItemGroup>
     <Compile Include="Crimes\Speeding.cs" />
     <Compile Include="Crimes\Stunting.cs" />
+    <Compile Include="DeathAnim.cs" />
     <Compile Include="DebugPos.cs" />
     <Compile Include="Freeroam.cs" />
     <Compile Include="Holders\PlayerSkin.cs" />
-    <Compile Include="InteractionMenu.cs" />
+    <Compile Include="Menus\InteractionMenu.cs" />
     <Compile Include="Holders\Level.cs" />
-    <Compile Include="PhoneMenu.cs" />
+    <Compile Include="Menus\PhoneMenu.cs" />
+    <Compile Include="Players\PlayerBlips.cs" />
     <Compile Include="Scoreboard.cs" />
     <Compile Include="Shops\HeliRent.cs" />
     <Compile Include="Utils\CachedPlayers.cs" />
