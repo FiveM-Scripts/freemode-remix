@@ -7,6 +7,6 @@ Alternative Freeroam Gamemode that works without any Database.
 3. Add the resource to your AutoStartResources.
 4. (Re)start server.
 
-Stuff in *Freeroam* folder is C# source code.
+Stuff in *Freeroam* folder is C# source code (Visual Studio Project).
 
 **NOTE:** Currently WIP.
