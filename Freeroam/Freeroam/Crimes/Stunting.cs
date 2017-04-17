@@ -8,8 +8,8 @@ namespace Freeroam.Crimes
 {
     class Stunting : BaseScript
     {
-        private static int MONEY_CAR_MINAIRTIME = 150;
-        private static int MONEY_BOAT_MINAIRTIME = 100;
+        private const int MONEY_CAR_MINAIRTIME = 150;
+        private const int MONEY_BOAT_MINAIRTIME = 100;
 
         private int airTime;
         private double payout;

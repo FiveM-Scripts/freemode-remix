@@ -1,4 +1,6 @@
 ﻿using CitizenFX.Core;
+using Freeroam.Holders;
+using Freeroam.Utils;
 using NativeUI;
 using System.Drawing;
 using System.Threading.Tasks;
@@ -7,12 +9,12 @@ namespace Freeroam
 {
     class Scoreboard : BaseScript
     {
-        private static float POS_X = 1200f;
-        private static float POS_Y = 50f;
-        private static float SCOREBOARD_LENGTH = 500f;
+        private const float POS_X = 1500f;
+        private const float POS_Y = 50f;
+        private const float SCOREBOARD_LENGTH = 400f;
 
-        private static float TITLE_HEIGHT = 50f;
-        private static float PLAYERITEM_HEIGHT = 75f;
+        private const float TITLE_HEIGHT = 50f;
+        private const float PLAYERITEM_HEIGHT = 60f;
 
         private bool drawScoreboard = false;
 
@@ -58,11 +60,35 @@ namespace Freeroam
             float nextPosY = POS_Y + TITLE_HEIGHT;
             foreach (Player player in Players)
             {
-                UIResRectangle playerRec = new UIResRectangle(new PointF(POS_X, nextPosY), new SizeF(SCOREBOARD_LENGTH, PLAYERITEM_HEIGHT), Color.FromArgb(120, 102, 204, 255));
-                playerRec.Draw();
+                DrawPlayerRec(player, POS_X, nextPosY);
+                DrawPlayerName(player, POS_X + 5f, nextPosY + 10f);
+                DrawPlayerLevel(player, POS_X + 290f, nextPosY + 10f);
 
                 nextPosY += PLAYERITEM_HEIGHT;
             }
+        }
+
+        private void DrawPlayerRec(Player player, float x, float y)
+        {
+            int r, g, b;
+            Util.GetPlayerRGBColor(player, out r, out g, out b);
+            UIResRectangle playerRec = new UIResRectangle(new PointF(x, y), new SizeF(SCOREBOARD_LENGTH, PLAYERITEM_HEIGHT), Color.FromArgb(120, r, g, b));
+            playerRec.Draw();
+        }
+
+        private void DrawPlayerName(Player player, float x, float y)
+        {
+            UIResText playerNameText = new UIResText(player.Name, new PointF(x, y), 0.5f);
+            playerNameText.DropShadow = true;
+            playerNameText.Draw();
+        }
+
+        private void DrawPlayerLevel(Player player, float x, float y)
+        {
+            int playerLVL = Level.GetPlayerLVL(player);
+            UIResText playerNameText = new UIResText($"LVL {playerLVL}", new PointF(x, y), 0.5f, Color.FromArgb(255, 102, 178, 255));
+            playerNameText.DropShadow = true;
+            playerNameText.Draw();
         }
     }
 }

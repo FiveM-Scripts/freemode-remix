@@ -4,34 +4,34 @@
     {
         /* LEVEL */
 
-        public static string LEVEL { get { return "Level"; } }
-        public static string LEVEL_UP { get { return "Level Up!"; } }
+        public const string LEVEL = "Level";
+        public const string LEVEL_UP = "Level Up!"; 
 
         /* CRIMES */
 
-        public static string CRIME_SPEEDING_PAYOUT { get { return "Speeding Bonus!"; } }
+        public const string CRIME_SPEEDING_PAYOUT = "Speeding Bonus!"; 
 
-        public static string CRIME_STUNTING_PAYOUT { get { return "Airtime Bonus!"; } }
+        public const string CRIME_STUNTING_PAYOUT = "Airtime Bonus!"; 
 
         /* INTERACTION MENU */
 
-        public static string INTERACTIONMENU_MAIN_TITLE { get { return "Freeroam"; } }
-        public static string INTERACTIONMENU_MAIN_SUBTITLE { get { return "Interaction"; } }
+        public const string INTERACTIONMENU_MAIN_TITLE = "Freeroam"; 
+        public const string INTERACTIONMENU_MAIN_SUBTITLE = "Interaction"; 
 
-        public static string INTERACTIONMENU_ABOUT { get { return "About"; } }
-        public static string INTERACTIONMENU_ABOUT_VERSION { get { return "Version: 1.0.0"; } }
-        public static string INTERACTIONMENU_ABOUT_AUTHOR { get { return "Made By Scammer"; } }
-        public static string INTERACTIONMENU_ABOUT_AUTHOR_DESC { get { return "What are you doing in here?"; } }
+        public const string INTERACTIONMENU_ABOUT = "About"; 
+        public const string INTERACTIONMENU_ABOUT_VERSION = "Version: 1.0.0"; 
+        public const string INTERACTIONMENU_ABOUT_AUTHOR = "Made By Scammer"; 
+        public const string INTERACTIONMENU_ABOUT_AUTHOR_DESC = "What are you doing in here?"; 
 
-        public static string INTERACTIONMENU_PLAYERSKIN { get { return "Player Skin"; } }
-        public static string INTERACTIONMENU_PLAYERSKIN_SUBTITLE { get { return "Change your skin"; } }
-        public static string INTERACTIONMENU_PLAYERSKIN_SEARCH { get { return "Search"; } }
-        public static string INTERACTIONMENU_PLAYERSKIN_CHANGING { get { return "Changing Player model..."; } }
-        public static string INTERACTIONMENU_PLAYERSKIN_INVALID { get { return "Invalid Player model."; } }
+        public const string INTERACTIONMENU_PLAYERSKIN = "Player Skin"; 
+        public const string INTERACTIONMENU_PLAYERSKIN_SUBTITLE = "Change your skin"; 
+        public const string INTERACTIONMENU_PLAYERSKIN_SEARCH = "Search"; 
+        public const string INTERACTIONMENU_PLAYERSKIN_CHANGING = "Changing Player model..."; 
+        public const string INTERACTIONMENU_PLAYERSKIN_INVALID = "Invalid Player model."; 
 
         /* PHONE MENU */
 
-        public static string PHONEMENU_MAIN_TITLE { get { return "KangOS 0.2.4"; } }
-        public static string PHONEMENU_MAIN_SUBTITLE { get { return "Main Menu"; } }
+        public const string PHONEMENU_MAIN_TITLE = "KangOS 0.2.4"; 
+        public const string PHONEMENU_MAIN_SUBTITLE = "Main Menu"; 
     }
 }

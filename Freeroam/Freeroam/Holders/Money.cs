@@ -10,6 +10,8 @@ namespace Freeroam.Holders
 {
     public class Money : BaseScript
     {
+        public const string PNAME_MONEY = "_PLAYER_MONEY";
+
         private int moneyChangeTextAmount;
         private int moneyChangeTextShowProgress;
 
@@ -38,20 +40,27 @@ namespace Freeroam.Holders
         private void SetMoney(int newMoney)
         {
             moneyChangeTextAmount = newMoney - MONEY;
-            moneyChangeTextShowProgress = 0;
+            moneyChangeTextShowProgress = 300;
 
             MONEY = newMoney < 0 ? 0 : newMoney;
             Storage.SetInt(Storage.MONEY, MONEY);
+        }
+
+        public static int GetPlayerMoney(Player player)
+        {
+            Ped playerPed = player.Character;
+            if (playerPed == null || !EntityDecoration.ExistOn(playerPed, PNAME_MONEY)) return 0;
+            else return EntityDecoration.Get<int>(playerPed, PNAME_MONEY);
         }
 
         private async Task OnTick()
         {
             DrawMoneyText();
 
-            if (moneyChangeTextShowProgress < 300)
+            if (moneyChangeTextShowProgress > 0)
             {
                 DrawMoneyChangeText();
-                moneyChangeTextShowProgress++;
+                moneyChangeTextShowProgress--;
             }
 
             await Task.FromResult(0);
@@ -59,7 +68,7 @@ namespace Freeroam.Holders
 
         private void DrawMoneyText()
         {
-            UIResText moneyText = new UIResText($"{MONEY} $", new PointF(280f, 680f), 0.7f, Color.FromArgb(255, 0, 153, 0),
+            UIResText moneyText = new UIResText($"{MONEY} $", new PointF(320f, 1024f), 0.7f, Color.FromArgb(255, 0, 153, 0),
                 Font.ChaletComprimeCologne, UIResText.Alignment.Left);
             moneyText.DropShadow = true;
             moneyText.Draw();
@@ -67,7 +76,7 @@ namespace Freeroam.Holders
 
         private void DrawMoneyChangeText()
         {
-            UIResText moneyChangeText = new UIResText("", new PointF(220f, 655f), 0.5f, Color.Empty,
+            UIResText moneyChangeText = new UIResText("", new PointF(320f, 995f), 0.5f, Color.Empty,
                 Font.ChaletComprimeCologne, UIResText.Alignment.Left);
 
             if (moneyChangeTextAmount > 0)

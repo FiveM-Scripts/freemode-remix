@@ -8,8 +8,8 @@ namespace Freeroam.Crimes
 {
     class Speeding : BaseScript
     {
-        private static int MONEY_TIMEUNTILPAYOUT = 5000;
-        private static int MINSPEED = 150;
+        private const int MONEY_TIMEUNTILPAYOUT = 5000;
+        private const int MINSPEED = 150;
 
         private int moneyCountdown = MONEY_TIMEUNTILPAYOUT;
 

@@ -16,10 +16,7 @@ namespace Freeroam.Utils
         {
             int hash = model.Hash;
             Function.Call(Hash.REQUEST_MODEL, hash);
-            while (!Function.Call<bool>(Hash.HAS_MODEL_LOADED, hash))
-            {
-                await Delay(1);
-            }
+            while (!Function.Call<bool>(Hash.HAS_MODEL_LOADED, hash)) await Delay(1);
 
             int pedId = Function.Call<int>(Hash.CREATE_PED, 26, hash, pos.X, pos.Y, pos.Z, heading, true, true);
             return new Ped(pedId);
@@ -29,10 +26,7 @@ namespace Freeroam.Utils
         {
             int hash = newSkin.Hash;
             Function.Call(Hash.REQUEST_MODEL, hash);
-            while (!Function.Call<bool>(Hash.HAS_MODEL_LOADED, hash))
-            {
-                await Delay(1);
-            }
+            while (!Function.Call<bool>(Hash.HAS_MODEL_LOADED, hash)) await Delay(1);
 
             Function.Call(Hash.SET_PLAYER_MODEL, Game.Player.Handle, hash);
         }
@@ -109,6 +103,17 @@ namespace Freeroam.Utils
         public static string GetLabelText(string labelName)
         {
             return Function.Call<string>(Hash._GET_LABEL_TEXT, labelName);
+        }
+
+        public static void GetPlayerRGBColor(Player player, out int r, out int g, out int b)
+        {
+            OutputArgument outR = new OutputArgument();
+            OutputArgument outG = new OutputArgument();
+            OutputArgument outB = new OutputArgument();
+            Function.Call(Hash.GET_PLAYER_RGB_COLOUR, player.Handle, outR, outG, outB);
+            r = outR.GetResult<int>();
+            g = outG.GetResult<int>();
+            b = outB.GetResult<int>();
         }
     }
 }
