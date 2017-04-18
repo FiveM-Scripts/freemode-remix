@@ -2,13 +2,18 @@
 {
     static class Events
     {
-        public static string FIRSTTIME { get { return "freeroam:newplayer"; } }
+        public const string FIRSTTIME = "freeroam:newplayer";
 
-        public static string MONEY_ADD { get { return "freeroam:addmoney"; } }
-        public static string MONEY_REMOVE { get { return "freeroam:removemoney"; } }
+        public const string MONEY_ADD = "freeroam:addmoney";
+        public const string MONEY_REMOVE = "freeroam:removemoney";
 
-        public static string XP_ADD { get { return "freeroam:addxp"; } }
+        public const string XP_ADD = "freeroam:addxp";
 
-        public static string PLAYERSKIN_CHANGE { get { return "freeroam:changeskin"; } }
+        public const string DISPLAY_DRAW = "freeroam:drawdisplay";
+
+        public const string PLAYERSKIN_CHANGE = "freeroam:changeskin";
+
+        public const string CHALLENGE_DRIVEDISTANCE_START = "freeroam:challenge_drivedistance:start";
+        public const string CHALLENGE_DRIVEDISTANCE_STOP = "freeroam:challenge_drivedistance:stop";
     }
 }

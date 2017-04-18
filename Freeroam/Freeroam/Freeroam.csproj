@@ -49,11 +49,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Challenges\ChallengeManager.cs" />
     <Compile Include="Crimes\Speeding.cs" />
     <Compile Include="Crimes\Stunting.cs" />
     <Compile Include="Crimes\WantedLevelEscape.cs" />
     <Compile Include="DeathAnim.cs" />
     <Compile Include="DebugPos.cs" />
+    <Compile Include="Challenges\DriveDistanceChallenge.cs" />
     <Compile Include="Freeroam.cs" />
     <Compile Include="Holders\PlayerSkin.cs" />
     <Compile Include="Menus\InteractionMenu.cs" />
@@ -71,9 +73,7 @@
     <Compile Include="Utils\Strings.cs" />
     <Compile Include="Utils\Util.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Events\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

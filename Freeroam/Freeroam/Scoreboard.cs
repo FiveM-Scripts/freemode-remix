@@ -1,4 +1,6 @@
 ﻿using CitizenFX.Core;
+using CitizenFX.Core.Native;
+using CitizenFX.Core.UI;
 using Freeroam.Holders;
 using Freeroam.Utils;
 using NativeUI;
@@ -28,6 +30,9 @@ namespace Freeroam
             if (Game.IsControlJustReleased(1, Control.MultiplayerInfo))
             {
                 drawScoreboard = !drawScoreboard;
+
+                Function.Call(Hash._SET_RADAR_BIGMAP_ENABLED, drawScoreboard, false);
+                TriggerEvent(Events.DISPLAY_DRAW, !drawScoreboard);
             }
 
             if (drawScoreboard)

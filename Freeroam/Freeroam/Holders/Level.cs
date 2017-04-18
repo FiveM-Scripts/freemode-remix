@@ -16,6 +16,7 @@ namespace Freeroam.Holders
         public static int XP { get; private set; }
         public static int LVL { get; private set; }
 
+        private bool drawText = true;
         private int lvlDecorTimeUntilUpdate;
 
         public Level()
@@ -25,6 +26,7 @@ namespace Freeroam.Holders
             LVL = (int)Math.Ceiling((double)XP / 50);
 
             EventHandlers[Events.XP_ADD] += new Action<int>(AddXP);
+            EventHandlers[Events.DISPLAY_DRAW] += new Action<bool>(draw => drawText = draw);
 
             EntityDecoration.RegisterProperty(PNAME_LEVEL, DecorationType.Int);
 
@@ -56,13 +58,16 @@ namespace Freeroam.Holders
 
         private async Task OnTick()
         {
-            DrawLevelText();
-
-            lvlDecorTimeUntilUpdate--;
-            if (lvlDecorTimeUntilUpdate <= 0)
+            if (drawText)
             {
-                UpdateLevelDecor();
-                lvlDecorTimeUntilUpdate = DECOR_LEVEL_TIMEUNTILUPDATE;
+                DrawLevelText();
+
+                lvlDecorTimeUntilUpdate--;
+                if (lvlDecorTimeUntilUpdate <= 0)
+                {
+                    UpdateLevelDecor();
+                    lvlDecorTimeUntilUpdate = DECOR_LEVEL_TIMEUNTILUPDATE;
+                }
             }
 
             await Task.FromResult(0);

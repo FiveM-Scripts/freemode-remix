@@ -13,6 +13,7 @@ namespace Freeroam.Holders
         private const string PNAME_MONEY = "_PLAYER_MONEY";
         private const int DECOR_MONEY_TIMEUNTILUPDATE = 20;
 
+        private bool drawText = true;
         private int moneyDecorTimeUntilUpdate;
         private int moneyChangeTextAmount;
         private int moneyChangeTextShowProgress;
@@ -25,6 +26,7 @@ namespace Freeroam.Holders
 
             EventHandlers[Events.MONEY_ADD] += new Action<int>(AddMoney);
             EventHandlers[Events.MONEY_REMOVE] += new Action<int>(RemoveMoney);
+            EventHandlers[Events.DISPLAY_DRAW] += new Action<bool>(draw => drawText = draw);
 
             EntityDecoration.RegisterProperty(PNAME_MONEY, DecorationType.Int);
 
@@ -59,19 +61,22 @@ namespace Freeroam.Holders
 
         private async Task OnTick()
         {
-            DrawMoneyText();
-
-            if (moneyChangeTextShowProgress > 0)
+            if (drawText)
             {
-                DrawMoneyChangeText();
-                moneyChangeTextShowProgress--;
-            }
+                DrawMoneyText();
 
-            moneyDecorTimeUntilUpdate--;
-            if (moneyDecorTimeUntilUpdate <= 0)
-            {
-                UpdateMoneyDecor();
-                moneyDecorTimeUntilUpdate = DECOR_MONEY_TIMEUNTILUPDATE;
+                if (moneyChangeTextShowProgress > 0)
+                {
+                    DrawMoneyChangeText();
+                    moneyChangeTextShowProgress--;
+                }
+
+                moneyDecorTimeUntilUpdate--;
+                if (moneyDecorTimeUntilUpdate <= 0)
+                {
+                    UpdateMoneyDecor();
+                    moneyDecorTimeUntilUpdate = DECOR_MONEY_TIMEUNTILUPDATE;
+                }
             }
 
             await Task.FromResult(0);
