@@ -15,5 +15,8 @@
 
         public const string CHALLENGE_START = "freeroam:startchallenge";
         public const string CHALLENGE_STOP = "freeroam:stopchallenge";
+
+        public const string MISSION_START = "freeroam:startmission";
+        public const string MISSION_STOP = "freeroam:stopmission";
     }
 }
