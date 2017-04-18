@@ -10,8 +10,6 @@ namespace Freeroam
         {
             TriggerServerEvent(Events.FIRSTTIME);
             SetPauseMenuTitle();
-
-            Game.PlayerPed.Weapons.Give(WeaponHash.Parachute, 1, true, true);
         }
 
         private void SetPauseMenuTitle()

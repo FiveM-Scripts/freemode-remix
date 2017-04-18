@@ -8,37 +8,34 @@ namespace Freeroam.Menus
 {
     class PhoneMenu : BaseScript
     {
+        private static UIResRectangle phoneTitle = new UIResRectangle(new PointF(), new SizeF(100f, 100f), Color.FromArgb(255, 0, 156, 0));
+
         private MenuPool menuPool;
         private UIMenu interactionMenu;
 
         public PhoneMenu()
         {
-            /*menuPool = new MenuPool();
+            menuPool = new MenuPool();
 
             interactionMenu = new UIMenu(Strings.PHONEMENU_MAIN_TITLE, "~g~" + Strings.PHONEMENU_MAIN_SUBTITLE);
-            interactionMenu.SetBannerType(new UIResRectangle(new PointF(), new SizeF(100f, 100f), Color.FromArgb(255, 0, 156, 0)));
+            interactionMenu.SetBannerType(phoneTitle);
             menuPool.Add(interactionMenu);
 
-            Tick += OnTick;*/
+            AddMissionsMenu();
+
+            Tick += OnTick;
         }
 
-        private void AddSomeMenuLater()
+        private void AddMissionsMenu()
         {
-            // TODO: Change this (copied over)
-
-            UIMenu aboutMenu = menuPool.AddSubMenu(interactionMenu, Strings.INTERACTIONMENU_ABOUT);
-
-            UIMenuItem versionItem = new UIMenuItem(Strings.INTERACTIONMENU_ABOUT_VERSION);
-            aboutMenu.AddItem(versionItem);
-
-            UIMenuItem authorItem = new UIMenuItem(Strings.INTERACTIONMENU_ABOUT_AUTHOR, Strings.INTERACTIONMENU_ABOUT_AUTHOR_DESC);
-            aboutMenu.AddItem(authorItem);
+            UIMenu missionsMenu = menuPool.AddSubMenu(interactionMenu, Strings.PHONEMENU_MISSIONS_MENU);
+            missionsMenu.SetBannerType(phoneTitle);
         }
 
         private async Task OnTick()
         {
             menuPool.ProcessMenus();
-            if (Game.IsControlJustReleased(1, Control.Phone))
+            if (Game.IsControlJustReleased(1, Control.Phone) && !interactionMenu.Visible)
             {
                 interactionMenu.Visible = !interactionMenu.Visible;
             }

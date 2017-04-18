@@ -23,7 +23,7 @@
         public const string INTERACTIONMENU_ABOUT_AUTHOR = "Made By Scammer"; 
         public const string INTERACTIONMENU_ABOUT_AUTHOR_DESC = "What are you doing in here?"; 
 
-        public const string INTERACTIONMENU_PLAYERSKIN = "Player Skin"; 
+        public const string INTERACTIONMENU_PLAYERSKIN_MENU = "Player Skin"; 
         public const string INTERACTIONMENU_PLAYERSKIN_SUBTITLE = "Change your skin"; 
         public const string INTERACTIONMENU_PLAYERSKIN_SEARCH = "Search"; 
         public const string INTERACTIONMENU_PLAYERSKIN_CHANGING = "Changing Player model..."; 
@@ -31,7 +31,9 @@
 
         /* PHONE MENU */
 
-        public const string PHONEMENU_MAIN_TITLE = "KangOS 0.2.4"; 
-        public const string PHONEMENU_MAIN_SUBTITLE = "Main Menu"; 
+        public const string PHONEMENU_MAIN_TITLE = "Phone"; 
+        public const string PHONEMENU_MAIN_SUBTITLE = "Main Menu";
+
+        public const string PHONEMENU_MISSIONS_MENU = "Missions";
     }
 }

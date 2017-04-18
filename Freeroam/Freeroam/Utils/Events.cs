@@ -13,7 +13,7 @@
 
         public const string PLAYERSKIN_CHANGE = "freeroam:changeskin";
 
-        public const string CHALLENGE_DRIVEDISTANCE_START = "freeroam:challenge_drivedistance:start";
-        public const string CHALLENGE_DRIVEDISTANCE_STOP = "freeroam:challenge_drivedistance:stop";
+        public const string CHALLENGE_START = "freeroam:startchallenge";
+        public const string CHALLENGE_STOP = "freeroam:stopchallenge";
     }
 }

@@ -1,49 +1,45 @@
-﻿using CitizenFX.Core;
-using Freeroam.Utils;
-using System;
-using System.Threading.Tasks;
+﻿using System;
+using CitizenFX.Core;
 
 namespace Freeroam.Challenges
 {
-    class DriveDistanceChallenge : BaseScript
+    class DriveDistanceChallenge : Challenge
     {
         private bool challengeStarted = false;
-        //private int 
-        private int drivenDistance;
+        private float drivenDistance;
+        private float bestDrivenDistance;
+        private Vector3 lastPos;
 
-        public DriveDistanceChallenge()
+        void Challenge.Start()
         {
-            EventHandlers[Events.CHALLENGE_DRIVEDISTANCE_START] += new Action(StartChallenge);
-            EventHandlers[Events.CHALLENGE_DRIVEDISTANCE_STOP] += new Action(StopChallenge);
-
-            Tick += OnTick;
+            throw new NotImplementedException();
         }
 
-        private void StartChallenge()
+        void Challenge.Stop()
         {
-
+            throw new NotImplementedException();
         }
 
-        private void StopChallenge()
-        {
-
-        }
-
-        private async Task OnTick()
+        void Challenge.Tick()
         {
             Ped playerPed = Game.PlayerPed;
-            if (playerPed != null && playerPed.IsInVehicle() && playerPed.CurrentVehicle.Driver == playerPed && !playerPed.IsInHeli
+            if (playerPed.IsInVehicle() && playerPed.CurrentVehicle.Driver == playerPed && !playerPed.IsInHeli
                 && !playerPed.IsInPlane && !playerPed.IsInBoat)
             {
-                Vehicle playerVeh = playerPed.CurrentVehicle;
+                CheckDistance();
             }
-
-            await Task.FromResult(0);
+            else drivenDistance = 0;
         }
 
         private void CheckDistance()
         {
-            Vehicle playerVeh = Game.PlayerPed.CurrentVehicle;
+            Vector3 vehPos = Game.PlayerPed.CurrentVehicle.Position;
+            if (lastPos != null)
+            {
+                drivenDistance += World.GetDistance(vehPos, lastPos);
+            }
+
+            lastPos = vehPos;
         }
     }
 }
