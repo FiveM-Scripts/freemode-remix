@@ -54,13 +54,14 @@
     <Compile Include="Crimes\Stunting.cs" />
     <Compile Include="Crimes\WantedLevelEscape.cs" />
     <Compile Include="DeathAnim.cs" />
-    <Compile Include="DebugPos.cs" />
+    <Compile Include="Debug\DebugPos.cs" />
     <Compile Include="Challenges\DriveDistanceChallenge.cs" />
     <Compile Include="Freeroam.cs" />
     <Compile Include="Holders\PlayerSkin.cs" />
     <Compile Include="Menus\InteractionMenu.cs" />
     <Compile Include="Holders\Level.cs" />
     <Compile Include="Menus\PhoneMenu.cs" />
+    <Compile Include="Missions\Assassination.cs" />
     <Compile Include="Missions\MissionManager.cs" />
     <Compile Include="Players\PlayerBlips.cs" />
     <Compile Include="Scoreboard.cs" />

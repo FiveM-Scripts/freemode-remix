@@ -1,7 +1,7 @@
 ﻿using CitizenFX.Core;
 using System.Threading.Tasks;
 
-namespace Freeroam
+namespace Freeroam.Debug
 {
     class DebugPos : BaseScript
     {
