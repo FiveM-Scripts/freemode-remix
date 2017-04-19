@@ -1,4 +1,5 @@
 ﻿using CitizenFX.Core;
+using CitizenFX.Core.UI;
 using Freeroam.Utils;
 using System;
 using System.Collections.Generic;
@@ -32,12 +33,16 @@ namespace Freeroam.Missions
             EventHandlers[Events.MISSION_START] += new Action<string>(StartMission);
             EventHandlers[Events.MISSION_STOP] += new Action(StopMission);
 
+            EventHandlers[Events.MISSION_RUNNING] += new Action<int, bool>(ClientStartedMissionNotification);
+
             Tick += OnTick;
         }
 
         private void StartMission(string missionKey)
         {
             if (CURRENT_MISSION != null) throw new MissionAlreadyRunningException();
+
+            TriggerServerEvent(Events.MISSION_RUNNING, Game.Player.ServerId, Game.Player.Handle, true);
 
             if (Game.PlayerPed != null)
             {
@@ -57,6 +62,15 @@ namespace Freeroam.Missions
                 CURRENT_MISSION.Stop();
                 CURRENT_MISSION = null;
             }
+
+            TriggerServerEvent(Events.MISSION_RUNNING, Game.Player.ServerId, Game.Player.Handle, false);
+        }
+
+        private void ClientStartedMissionNotification(int handle, bool state)
+        {
+            string playerName = new Player(handle).Name;
+            string text = string.Format(state ? Strings.PHONEMENU_MISSIONS_MISSIONSTARTED : Strings.PHONEMENU_MISSIONS_MISSIONSTOPPED, $"~b~{playerName}~w~");
+            Screen.ShowNotification(text);
         }
 
         private async Task OnTick()

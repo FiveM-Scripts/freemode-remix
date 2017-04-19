@@ -29,7 +29,7 @@ namespace Freeroam.Menus
 
             AddMissionsMenu();
 
-            EventHandlers[Events.MISSION_RUNNING] += new Action<bool>(running => missionRunning = running);
+            EventHandlers[Events.MISSION_RUNNING] += new Action<int, bool>((client, running) => missionRunning = running);
 
             Tick += OnTick;
         }
@@ -55,7 +55,7 @@ namespace Freeroam.Menus
                     missionsMenu.Visible = false;
 
                     string missionName = item.Text;
-                    TriggerServerEvent(Events.MISSION_START, Game.Player.ServerId, missionName);
+                    TriggerEvent(Events.MISSION_START, missionName);
                 }
             };
         }

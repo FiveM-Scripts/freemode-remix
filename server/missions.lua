@@ -1,11 +1,19 @@
-RegisterServerEvent("freeroam:startmission")
-AddEventHandler("freeroam:startmission", function(source, mission)
-	TriggerClientEvent("freeroam:missionrunning", -1, true)
-	TriggerClientEvent("freeroam:startmission", source, mission)
+local missionClient
+
+RegisterServerEvent("freeroam:missionrunning")
+AddEventHandler("freeroam:missionrunning", function(source, client, state)
+	if not state then
+		missionClient = nil
+	else
+		missionClient = source
+	end
+
+	TriggerClientEvent("freeroam:missionrunning", -1, client, state)
 end)
 
-RegisterServerEvent("freeroam:stopmission")
-AddEventHandler("freeroam:stopmission", function(source)
-	TriggerClientEvent("freeroam:missionrunning", -1, false)
-	TriggerClientEvent("freeroam:stopmission", source)
+AddEventHandler("playerDropped", function(reason)
+	if source == missionClient then
+		missionClient = nil
+		TriggerClientEvent("freeroam:missionrunning", -1, false)
+	end
 end)
