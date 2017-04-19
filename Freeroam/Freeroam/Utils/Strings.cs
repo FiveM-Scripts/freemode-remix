@@ -38,5 +38,9 @@
         public const string PHONEMENU_MISSIONS_MISSIONRUNNING = "A mission is already in progress.";
         public const string PHONEMENU_MISSIONS_MISSIONSTARTED = "{0} started a new mission!";
         public const string PHONEMENU_MISSIONS_MISSIONSTOPPED = "{0} finished a mission!";
+
+        public const string MISSIONS_ASSASSINATION_START = "Take out the ~r~targets~w~.";
+        public const string MISSIONS_ASSASSINATION_BLIP = "Target";
+        public const string MISSIONS_ASSASSINATION_TARGETKILLED = "You killed a ~r~target~w~!";
     }
 }
