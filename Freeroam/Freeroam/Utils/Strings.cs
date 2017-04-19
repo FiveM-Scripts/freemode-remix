@@ -35,5 +35,6 @@
         public const string PHONEMENU_MAIN_SUBTITLE = "Main Menu";
 
         public const string PHONEMENU_MISSIONS_MENU = "Missions";
+        public const string PHONEMENU_MISSIONS_MISSIONRUNNING = "A mission is already running in the server.";
     }
 }

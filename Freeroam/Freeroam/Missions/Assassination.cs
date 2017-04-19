@@ -12,7 +12,7 @@ namespace Freeroam.Missions
             Ped ped = await Util.CreatePed(PedHash.Abner, Game.PlayerPed.Position);
             ped.MarkAsNoLongerNeeded();
 
-            MissionManager.StopMission();
+            BaseScript.TriggerServerEvent(Events.MISSION_STOP, Game.Player.ServerId);
         }
 
         public void Stop()

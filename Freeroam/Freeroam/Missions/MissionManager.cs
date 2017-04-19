@@ -29,13 +29,13 @@ namespace Freeroam.Missions
 
         public MissionManager()
         {
-            EventHandlers[Events.CHALLENGE_START] += new Action<string>(StartMission);
-            EventHandlers[Events.CHALLENGE_STOP] += new Action(StopMission);
+            EventHandlers[Events.MISSION_START] += new Action<string>(StartMission);
+            EventHandlers[Events.MISSION_STOP] += new Action(StopMission);
 
             Tick += OnTick;
         }
 
-        public static void StartMission(string missionKey)
+        private void StartMission(string missionKey)
         {
             if (CURRENT_MISSION != null) throw new MissionAlreadyRunningException();
 
@@ -50,7 +50,7 @@ namespace Freeroam.Missions
             }
         }
 
-        public static void StopMission()
+        private void StopMission()
         {
             if (CURRENT_MISSION != null)
             {

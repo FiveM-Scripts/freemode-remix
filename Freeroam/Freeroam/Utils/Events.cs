@@ -18,5 +18,6 @@
 
         public const string MISSION_START = "freeroam:startmission";
         public const string MISSION_STOP = "freeroam:stopmission";
+        public const string MISSION_RUNNING = "freeroam:missionrunning";
     }
 }

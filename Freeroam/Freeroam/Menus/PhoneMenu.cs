@@ -1,5 +1,5 @@
 ﻿using CitizenFX.Core;
-using Freeroam.Missions;
+using CitizenFX.Core.UI;
 using Freeroam.Utils;
 using NativeUI;
 using System;
@@ -17,6 +17,8 @@ namespace Freeroam.Menus
         private MenuPool menuPool;
         private UIMenu interactionMenu;
 
+        private bool missionRunning;
+
         public PhoneMenu()
         {
             menuPool = new MenuPool();
@@ -26,6 +28,8 @@ namespace Freeroam.Menus
             menuPool.Add(interactionMenu);
 
             AddMissionsMenu();
+
+            EventHandlers[Events.MISSION_RUNNING] += new Action<bool>(running => missionRunning = running);
 
             Tick += OnTick;
         }
@@ -45,10 +49,14 @@ namespace Freeroam.Menus
 
             missionsMenu.OnItemSelect += (sender, item, index) =>
             {
-                missionsMenu.Visible = false;
+                if (missionRunning) Screen.ShowNotification("~r~" + Strings.PHONEMENU_MISSIONS_MISSIONRUNNING);
+                else
+                {
+                    missionsMenu.Visible = false;
 
-                string missionName = item.Text;
-                MissionManager.StartMission(missionName);
+                    string missionName = item.Text;
+                    TriggerServerEvent(Events.MISSION_START, Game.Player.ServerId, missionName);
+                }
             };
         }
 

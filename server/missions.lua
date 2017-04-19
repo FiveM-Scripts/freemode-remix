@@ -1,0 +1,11 @@
+RegisterServerEvent("freeroam:startmission")
+AddEventHandler("freeroam:startmission", function(source, mission)
+	TriggerClientEvent("freeroam:missionrunning", -1, true)
+	TriggerClientEvent("freeroam:startmission", source, mission)
+end)
+
+RegisterServerEvent("freeroam:stopmission")
+AddEventHandler("freeroam:stopmission", function(source)
+	TriggerClientEvent("freeroam:missionrunning", -1, false)
+	TriggerClientEvent("freeroam:stopmission", source)
+end)
