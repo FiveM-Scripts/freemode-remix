@@ -45,6 +45,8 @@ namespace Freeroam.Menus
 
             missionsMenu.OnItemSelect += (sender, item, index) =>
             {
+                missionsMenu.Visible = false;
+
                 string missionName = item.Text;
                 MissionManager.StartMission(missionName);
             };
