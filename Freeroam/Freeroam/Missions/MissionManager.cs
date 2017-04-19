@@ -13,14 +13,14 @@ namespace Freeroam.Missions
         Task Tick();
     }
 
-    enum Missions
+    static class Missions
     {
-        ASSASSINATION
+        public const string ASSASSINATION = "Assassination";
     }
 
     class MissionManager : BaseScript
     {
-        private static Dictionary<Missions, Type> missions = new Dictionary<Missions, Type>()
+        private static Dictionary<string, Type> missions = new Dictionary<string, Type>()
         {
             [Missions.ASSASSINATION] = typeof(Assassination)
         };
@@ -29,13 +29,13 @@ namespace Freeroam.Missions
 
         public MissionManager()
         {
-            EventHandlers[Events.CHALLENGE_START] += new Action<Missions>(StartMission);
+            EventHandlers[Events.CHALLENGE_START] += new Action<string>(StartMission);
             EventHandlers[Events.CHALLENGE_STOP] += new Action(StopMission);
 
             Tick += OnTick;
         }
 
-        public static void StartMission(Missions missionKey)
+        public static void StartMission(string missionKey)
         {
             if (CURRENT_MISSION != null) throw new MissionAlreadyRunningException();
 
