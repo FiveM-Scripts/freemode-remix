@@ -89,27 +89,4 @@ namespace Freeroam.Missions
 
         internal class MissionAlreadyRunningException : Exception { }
     }
-
-    internal class MissionPlayerBlip : BaseScript
-    {
-        private BlipColor prevPlayerBlipColor;
-
-        public MissionPlayerBlip()
-        {
-            EventHandlers[Events.MISSION_RUNNING] += new Action<int, bool>((clientHandle, state) =>
-            {
-                Player missionPlayer = new Player(clientHandle);
-                if (missionPlayer != Game.Player)
-                {
-                    Ped playerPed = missionPlayer.Character;
-                    if (state)
-                    {
-                        prevPlayerBlipColor = playerPed.AttachedBlip.Color;
-                        playerPed.AttachedBlip.Color = BlipColor.Yellow;
-                    }
-                    else playerPed.AttachedBlip.Color = prevPlayerBlipColor;
-                }
-            });
-        }
-    }
 }
