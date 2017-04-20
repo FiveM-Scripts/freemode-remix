@@ -8,14 +8,14 @@ AddEventHandler("freeroam:newplayer", function(source)
 end)
 
 RegisterServerEvent("freeroam:missionrunning")
-AddEventHandler("freeroam:missionrunning", function(source, state)
+AddEventHandler("freeroam:missionrunning", function(source, clientHandle, state)
 	if not state then
 		missionClient = nil
 	else
 		missionClient = source
 	end
 
-	TriggerClientEvent("freeroam:missionrunning", -1, GetPlayerName(source), state)
+	TriggerClientEvent("freeroam:missionrunning", -1, clientHandle, state)
 end)
 
 AddEventHandler("playerDropped", function(reason)

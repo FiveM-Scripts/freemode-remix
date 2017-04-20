@@ -2,11 +2,24 @@
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Freeroam.Utils;
+using System;
 using System.Threading.Tasks;
 
 namespace Freeroam.Missions
 {
-    class Assassination : Mission
+    internal class Target
+    {
+        public Ped targetPed;
+        public Ped[] bodyguards;
+
+        public Target(Ped targetPed, Ped[] bodyguards)
+        {
+            this.targetPed = targetPed;
+            this.bodyguards = bodyguards;
+        }
+    }
+
+    class Assassination : IMission
     {
         private static Vector3[] targetSpawns = new Vector3[]
         {
@@ -18,25 +31,26 @@ namespace Freeroam.Missions
             new Vector3(-1155f, -524f, 31f)
         };
 
-        private Ped[] targets = new Ped[6];
+        private Target[] targets = new Target[6];
         private bool enableTick = false;
 
         public async void Start()
         {
             for (int i = 0; i < targets.Length - 1; i++)
             {
-                Ped target = await Util.CreatePed(PedHash.Business01AMY, targetSpawns[i]);
-                target.Task.WanderAround();
+                Ped targetPed = await Util.CreatePed(PedHash.Business01AMY, targetSpawns[i]);
+                RandomAction(targetPed);
+                Ped[] bodyguards = await SpawnBodyguards(targetPed);
 
                 Function.Call(Hash.FLASH_MINIMAP_DISPLAY);
 
-                Blip blip = target.AttachBlip();
+                Blip blip = targetPed.AttachBlip();
                 blip.Sprite = BlipSprite.Enemy;
                 blip.Color = BlipColor.Red;
                 blip.Name = Strings.MISSIONS_ASSASSINATION_BLIP;
                 blip.Scale = 0.8f;
 
-                targets[i] = target;
+                targets[i] = new Target(targetPed, bodyguards);
             }
 
             Util.DisplayHelpText(Strings.MISSIONS_ASSASSINATION_INFO);
@@ -48,12 +62,11 @@ namespace Freeroam.Missions
         {
             if (!success)
             {
-                foreach (Ped target in targets)
+                foreach (Target target in targets)
                 {
                     if (target != null)
                     {
-                        target.AttachedBlip.Delete();
-                        target.MarkAsNoLongerNeeded();
+                        DespawnTargetSquad(target);
                     }
                 }
             }
@@ -81,15 +94,14 @@ namespace Freeroam.Missions
                     {
                         if (targets[i] != null)
                         {
-                            if (!targets[i].IsDead) livingTargets++;
+                            if (!targets[i].targetPed.IsDead) livingTargets++;
                             else
                             {
                                 Screen.ShowNotification(Strings.MISSIONS_ASSASSINATION_TARGETKILLED);
 
                                 if (Game.Player.WantedLevel < 3) Game.Player.WantedLevel = 3;
 
-                                targets[i].AttachedBlip.Delete();
-                                targets[i].MarkAsNoLongerNeeded();
+                                DespawnTargetSquad(targets[i]);
                                 targets[i] = null;
                             }
                         }
@@ -100,6 +112,48 @@ namespace Freeroam.Missions
             }
 
             await Task.FromResult(0);
+        }
+
+        private void RandomAction(Ped ped)
+        {
+            int actionChoice = new Random().Next(0, 101);
+            if (actionChoice < 50) ped.Task.StartScenario("WORLD_HUMAN_AA_SMOKE", ped.Position);
+            else ped.Task.WanderAround();
+        }
+
+        private async Task<Ped[]> SpawnBodyguards(Ped ped)
+        {
+            PedGroup group = new PedGroup();
+            group.Add(ped, true);
+
+            RelationshipGroup relationship = World.AddRelationshipGroup("_ASSASSIN_PEDS");
+            relationship.SetRelationshipBetweenGroups(new RelationshipGroup(Util.GetHashKey("COP")), Relationship.Respect, true);
+            ped.RelationshipGroup = relationship;
+
+            Random random = new Random();
+            int amount = random.Next(0, 4);
+            Ped[] bodyguards = new Ped[amount];
+            for (int i = 0; i < amount; i++)
+            {
+                Vector3 spawnPos = new Vector3(random.Next(-5, 5), random.Next(-5, 5), random.Next(-5, 5));
+                Ped bodyguard = await Util.CreatePed(PedHash.Bouncer01SMM, spawnPos);
+                bodyguard.Armor = 100;
+                bodyguard.Weapons.Give(WeaponHash.CarbineRifle, int.MaxValue, true, true);
+
+                bodyguard.RelationshipGroup = relationship;
+                group.Add(bodyguard, false);
+
+                bodyguards[i] = bodyguard;
+            }
+
+            return bodyguards;
+        }
+
+        private void DespawnTargetSquad(Target target)
+        {
+            target.targetPed.AttachedBlip.Delete();
+            target.targetPed.MarkAsNoLongerNeeded();
+            foreach (Ped bodyguard in target.bodyguards) bodyguard.MarkAsNoLongerNeeded();
         }
     }
 }
