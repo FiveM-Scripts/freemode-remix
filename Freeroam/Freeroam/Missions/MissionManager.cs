@@ -10,7 +10,7 @@ namespace Freeroam.Missions
     interface Mission
     {
         void Start();
-        void Stop();
+        void Stop(bool success);
         Task Tick();
     }
 
@@ -31,7 +31,7 @@ namespace Freeroam.Missions
         public MissionManager()
         {
             EventHandlers[Events.MISSION_START] += new Action<string>(StartMission);
-            EventHandlers[Events.MISSION_STOP] += new Action(StopMission);
+            EventHandlers[Events.MISSION_STOP] += new Action<bool>(StopMission);
 
             EventHandlers[Events.MISSION_RUNNING] += new Action<int, bool>(ClientStartedMissionNotification);
 
@@ -55,15 +55,16 @@ namespace Freeroam.Missions
             }
         }
 
-        private void StopMission()
+        private void StopMission(bool success)
         {
             if (CURRENT_MISSION != null)
             {
-                CURRENT_MISSION.Stop();
+                if (!success) Screen.ShowNotification(Strings.MISSIONS_FAIL);
+                CURRENT_MISSION.Stop(success);
                 CURRENT_MISSION = null;
-            }
 
-            TriggerServerEvent(Events.MISSION_RUNNING, Game.Player.ServerId, Game.Player.Handle, false);
+                TriggerServerEvent(Events.MISSION_RUNNING, Game.Player.ServerId, Game.Player.Handle, false);
+            }
         }
 
         private void ClientStartedMissionNotification(int handle, bool state)

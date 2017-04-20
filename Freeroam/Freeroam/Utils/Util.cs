@@ -1,5 +1,6 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
+using CitizenFX.Core.UI;
 using System.Threading.Tasks;
 using static CitizenFX.Core.BaseScript;
 
@@ -114,6 +115,15 @@ namespace Freeroam.Utils
             r = outR.GetResult<int>();
             g = outG.GetResult<int>();
             b = outB.GetResult<int>();
+        }
+
+        public async static void DisplayHelpText(string text)
+        {
+            for (int i = 0; i < 1000; i++)
+            {
+                Screen.DisplayHelpTextThisFrame(text);
+                await Delay(1);
+            }
         }
     }
 }

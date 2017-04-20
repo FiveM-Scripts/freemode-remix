@@ -15,12 +15,20 @@ namespace Freeroam.Crimes
 
         private async Task OnTick()
         {
-            if (Game.Player.WantedLevel > 2) prevWantedLvl = Game.Player.WantedLevel;
-            else if (Game.Player.WantedLevel == 0 && prevWantedLvl > 0)
+            Ped playerPed = Game.PlayerPed;
+            if (playerPed != null)
             {
-                TriggerEvent(Events.MONEY_ADD, 20 * prevWantedLvl);
-                TriggerEvent(Events.XP_ADD, 3 * prevWantedLvl);
-                prevWantedLvl = 0;
+                if (playerPed.IsDead) prevWantedLvl = 0;
+                else
+                {
+                    if (Game.Player.WantedLevel > 2) prevWantedLvl = Game.Player.WantedLevel;
+                    else if (Game.Player.WantedLevel == 0 && prevWantedLvl > 0)
+                    {
+                        TriggerEvent(Events.MONEY_ADD, 20 * prevWantedLvl);
+                        TriggerEvent(Events.XP_ADD, 3 * prevWantedLvl);
+                        prevWantedLvl = 0;
+                    }
+                }
             }
 
             await Task.FromResult(0);

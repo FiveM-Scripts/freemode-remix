@@ -39,39 +39,64 @@ namespace Freeroam.Missions
                 targets[i] = target;
             }
 
-            Screen.ShowSubtitle(Strings.MISSIONS_ASSASSINATION_START, 10000);
+            Util.DisplayHelpText(Strings.MISSIONS_ASSASSINATION_INFO);
+            Screen.ShowSubtitle(Strings.MISSIONS_ASSASSINATION_START, 15000);
             enableTick = true;
         }
 
-        public void Stop()
+        public void Stop(bool success)
         {
-
+            if (!success)
+            {
+                foreach (Ped target in targets)
+                {
+                    if (target != null)
+                    {
+                        target.AttachedBlip.Delete();
+                        target.MarkAsNoLongerNeeded();
+                    }
+                }
+            }
+            else
+            {
+                Screen.ShowNotification(Strings.MISSIONS_ASSASSINATION_ALLTARGETSKILLED);
+                BaseScript.TriggerEvent(Events.MONEY_ADD, 350);
+                BaseScript.TriggerEvent(Events.XP_ADD, 13);
+            }
         }
 
         public async Task Tick()
         {
             if (enableTick)
             {
-                int livingTargets = 0;
-                for (int i = targets.Length - 1; i > -1; i--)
+                if (Game.PlayerPed.IsDead)
                 {
-                    if (targets[i] != null)
+                    BaseScript.TriggerEvent(Events.MISSION_STOP, false);
+                    enableTick = false;
+                }
+                else
+                {
+                    int livingTargets = 0;
+                    for (int i = targets.Length - 1; i > -1; i--)
                     {
-                        if (!targets[i].IsDead) livingTargets++;
-                        else
+                        if (targets[i] != null)
                         {
-                            Screen.ShowNotification(Strings.MISSIONS_ASSASSINATION_TARGETKILLED);
+                            if (!targets[i].IsDead) livingTargets++;
+                            else
+                            {
+                                Screen.ShowNotification(Strings.MISSIONS_ASSASSINATION_TARGETKILLED);
 
-                            if (Game.Player.WantedLevel < 3) Game.Player.WantedLevel = 3;
+                                if (Game.Player.WantedLevel < 3) Game.Player.WantedLevel = 3;
 
-                            targets[i].AttachedBlip.Delete();
-                            targets[i].MarkAsNoLongerNeeded();
-                            targets[i] = null;
+                                targets[i].AttachedBlip.Delete();
+                                targets[i].MarkAsNoLongerNeeded();
+                                targets[i] = null;
+                            }
                         }
                     }
-                }
 
-                if (livingTargets == 0) BaseScript.TriggerEvent(Events.MISSION_STOP);
+                    if (livingTargets == 0) BaseScript.TriggerEvent(Events.MISSION_STOP, true);
+                }
             }
 
             await Task.FromResult(0);
