@@ -13,11 +13,13 @@ namespace Freeroam.Menus
     class PhoneMenu : BaseScript
     {
         private static UIResRectangle phoneTitle = new UIResRectangle(new PointF(), new SizeF(100f, 100f), Color.FromArgb(255, 0, 156, 0));
+        private const int MISSION_COOLDOWN_SECS = 120;
 
         private MenuPool menuPool;
         private UIMenu interactionMenu;
 
         private bool missionRunning = false;
+        private static int missionCooldown;
 
         public PhoneMenu()
         {
@@ -49,10 +51,12 @@ namespace Freeroam.Menus
 
             missionsMenu.OnItemSelect += (sender, item, index) =>
             {
-                if (missionRunning) Screen.ShowNotification("~r~" + Strings.PHONEMENU_MISSIONS_MISSIONRUNNING);
+                if (missionCooldown > 0) Screen.ShowNotification(string.Format("~r~" + Strings.PHONEMENU_MISSIONS_MISSIONCOOLDOWN, missionCooldown));
+                else if (missionRunning) Screen.ShowNotification("~r~" + Strings.PHONEMENU_MISSIONS_MISSIONRUNNING);
                 else
                 {
                     missionsMenu.Visible = false;
+                    missionCooldown = MISSION_COOLDOWN_SECS;
 
                     string missionName = item.Text;
                     TriggerEvent(Events.MISSION_START, missionName);
@@ -75,5 +79,24 @@ namespace Freeroam.Menus
 
             await Task.FromResult(0);
          }
+
+        internal class MissionCooldownCounter : BaseScript
+        {
+            public MissionCooldownCounter()
+            {
+                Tick += OnTick;
+            }
+
+            private async Task OnTick()
+            {
+                if (missionCooldown > 0)
+                {
+                    await Delay(1000);
+                    missionCooldown--;
+                }
+
+                await Task.FromResult(0);
+            }
+        }
     }
 }
