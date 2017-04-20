@@ -8,7 +8,7 @@ namespace Freeroam
     {
         public Freeroam()
         {
-            TriggerServerEvent(Events.FIRSTTIME);
+            TriggerServerEvent(Events.FIRSTTIME, Game.Player.ServerId);
             SetPauseMenuTitle();
         }
 

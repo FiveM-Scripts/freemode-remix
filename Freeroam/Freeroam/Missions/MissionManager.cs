@@ -67,7 +67,7 @@ namespace Freeroam.Missions
                 CURRENT_MISSION.Stop(success);
                 CURRENT_MISSION = null;
 
-                TriggerServerEvent(Events.MISSION_RUNNING, Game.Player.ServerId, Game.Player.Handle, false);
+                TriggerServerEvent(Events.MISSION_RUNNING, Game.Player.ServerId, false);
             }
         }
 
