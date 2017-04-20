@@ -29,7 +29,7 @@ namespace Freeroam.Menus
 
             AddMissionsMenu();
 
-            EventHandlers[Events.MISSION_RUNNING] += new Action<int, bool>(ClientStartedMission);
+            EventHandlers[Events.MISSION_RUNNING] += new Action<string, bool>(ClientStartedMission);
 
             Tick += OnTick;
         }
@@ -60,7 +60,7 @@ namespace Freeroam.Menus
             };
         }
 
-        private void ClientStartedMission(int handle, bool state)
+        private void ClientStartedMission(string playerName, bool state)
         {
             missionRunning = state;
         }

@@ -3,6 +3,8 @@
     static class Events
     {
         public const string FIRSTTIME = "freeroam:newplayer";
+        public const string PLAYER_JOINED = "freeroam:playerjoined";
+        public const string PLAYER_LEFT = "freeroam:playerleft";
 
         public const string MONEY_ADD = "freeroam:addmoney";
         public const string MONEY_REMOVE = "freeroam:removemoney";

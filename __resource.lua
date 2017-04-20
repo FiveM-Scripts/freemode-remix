@@ -5,5 +5,6 @@ client_scripts {
 
 server_scripts {
 	"server/main.lua",
-	"server/missions.lua"
+	"server/missions.lua",
+	"server/notifications.lua"
 }

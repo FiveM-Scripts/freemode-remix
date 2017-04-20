@@ -2,6 +2,11 @@
 {
     static class Strings
     {
+        /* NOTIFICATIONS */
+
+        public const string PLAYER_JOINED = "{0} joined the game.";
+        public const string PLAYER_LEFT = "{0} left the game.";
+
         /* LEVEL */
 
         public const string LEVEL = "Level";
@@ -38,6 +43,8 @@
         public const string PHONEMENU_MISSIONS_MISSIONRUNNING = "A mission is already in progress.";
         public const string PHONEMENU_MISSIONS_MISSIONSTARTED = "{0} started a new mission.";
         public const string PHONEMENU_MISSIONS_MISSIONSTOPPED = "{0} finished a mission.";
+
+        /* MISSIONS */
 
         public const string MISSIONS_FAIL = "~r~Mission failed.";
 

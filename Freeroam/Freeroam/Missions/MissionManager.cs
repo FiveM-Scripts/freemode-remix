@@ -35,7 +35,7 @@ namespace Freeroam.Missions
             EventHandlers[Events.MISSION_START] += new Action<string>(StartMission);
             EventHandlers[Events.MISSION_STOP] += new Action<bool>(StopMission);
 
-            EventHandlers[Events.MISSION_RUNNING] += new Action<int, bool>(ClientStartedMission);
+            EventHandlers[Events.MISSION_RUNNING] += new Action<string, bool>(ClientStartedMission);
 
             Tick += OnTick;
         }
@@ -45,7 +45,7 @@ namespace Freeroam.Missions
             if (CURRENT_MISSION != null || missionRunning) throw new MissionAlreadyRunningException();
             else
             {
-                TriggerServerEvent(Events.MISSION_RUNNING, Game.Player.ServerId, Game.Player.Handle, true);
+                TriggerServerEvent(Events.MISSION_RUNNING, Game.Player.ServerId, true);
 
                 if (Game.PlayerPed != null)
                 {
@@ -71,11 +71,10 @@ namespace Freeroam.Missions
             }
         }
 
-        private void ClientStartedMission(int handle, bool state)
+        private void ClientStartedMission(string playerName, bool state)
         {
             missionRunning = state;
 
-            string playerName = new Player(handle).Name;
             string text = string.Format(state ? Strings.PHONEMENU_MISSIONS_MISSIONSTARTED : Strings.PHONEMENU_MISSIONS_MISSIONSTOPPED, $"~b~{playerName}~w~");
             Screen.ShowNotification(text);
         }
