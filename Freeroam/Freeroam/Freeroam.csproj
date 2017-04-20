@@ -65,6 +65,7 @@
     <Compile Include="Missions\Mission.cs" />
     <Compile Include="Players\JoinNotification.cs" />
     <Compile Include="Players\PlayerBlips.cs" />
+    <Compile Include="Players\Spawning.cs" />
     <Compile Include="Scoreboard.cs" />
     <Compile Include="Shops\HeliRent.cs" />
     <Compile Include="Utils\CachedPlayers.cs" />

@@ -63,11 +63,11 @@ namespace Freeroam.Utils
             return densityOut.GetResult<int>();
         }
 
-        public static Vector3 GetClosestSafeCoords(Vector3 pos)
+        public static Vector3 GetClosestSafeCoords(Vector3 pos, bool onGround)
         {
             OutputArgument resultPos = new OutputArgument();
 
-            Function.Call(Hash.GET_SAFE_COORD_FOR_PED, pos.X, pos.Y, pos.Z, true, resultPos, 16f);
+            Function.Call(Hash.GET_SAFE_COORD_FOR_PED, pos.X, pos.Y, pos.Z, onGround, resultPos, 0);
 
             return resultPos.GetResult<Vector3>();
         }
