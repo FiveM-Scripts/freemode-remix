@@ -28,29 +28,33 @@ namespace Freeroam.Missions
 
         public static Mission CURRENT_MISSION { get; private set; }
 
+        private bool missionRunning = false;
+
         public MissionManager()
         {
             EventHandlers[Events.MISSION_START] += new Action<string>(StartMission);
             EventHandlers[Events.MISSION_STOP] += new Action<bool>(StopMission);
 
-            EventHandlers[Events.MISSION_RUNNING] += new Action<int, bool>(ClientStartedMissionNotification);
+            EventHandlers[Events.MISSION_RUNNING] += new Action<int, bool>(ClientStartedMission);
 
             Tick += OnTick;
         }
 
         private void StartMission(string missionKey)
         {
-            if (CURRENT_MISSION != null) throw new MissionAlreadyRunningException();
-
-            TriggerServerEvent(Events.MISSION_RUNNING, Game.Player.ServerId, Game.Player.Handle, true);
-
-            if (Game.PlayerPed != null)
+            if (CURRENT_MISSION != null || missionRunning) throw new MissionAlreadyRunningException();
+            else
             {
-                Type challenge;
-                if (missions.TryGetValue(missionKey, out challenge))
+                TriggerServerEvent(Events.MISSION_RUNNING, Game.Player.ServerId, Game.Player.Handle, true);
+
+                if (Game.PlayerPed != null)
                 {
-                    CURRENT_MISSION = (Mission)Activator.CreateInstance(challenge);
-                    CURRENT_MISSION.Start();
+                    Type challenge;
+                    if (missions.TryGetValue(missionKey, out challenge))
+                    {
+                        CURRENT_MISSION = (Mission)Activator.CreateInstance(challenge);
+                        CURRENT_MISSION.Start();
+                    }
                 }
             }
         }
@@ -67,8 +71,10 @@ namespace Freeroam.Missions
             }
         }
 
-        private void ClientStartedMissionNotification(int handle, bool state)
+        private void ClientStartedMission(int handle, bool state)
         {
+            missionRunning = state;
+
             string playerName = new Player(handle).Name;
             string text = string.Format(state ? Strings.PHONEMENU_MISSIONS_MISSIONSTARTED : Strings.PHONEMENU_MISSIONS_MISSIONSTOPPED, $"~b~{playerName}~w~");
             Screen.ShowNotification(text);
@@ -81,6 +87,6 @@ namespace Freeroam.Missions
             await Task.FromResult(0);
         }
 
-        private class MissionAlreadyRunningException : Exception { }
+        internal class MissionAlreadyRunningException : Exception { }
     }
 }

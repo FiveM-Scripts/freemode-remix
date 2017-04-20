@@ -1,11 +1,13 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.UI;
+using Freeroam.Missions;
 using Freeroam.Utils;
 using NativeUI;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace Freeroam.Menus
@@ -17,7 +19,7 @@ namespace Freeroam.Menus
         private MenuPool menuPool;
         private UIMenu interactionMenu;
 
-        private bool missionRunning;
+        private bool missionRunning = false;
 
         public PhoneMenu()
         {
@@ -29,7 +31,7 @@ namespace Freeroam.Menus
 
             AddMissionsMenu();
 
-            EventHandlers[Events.MISSION_RUNNING] += new Action<int, bool>((client, running) => missionRunning = running);
+            EventHandlers[Events.MISSION_RUNNING] += new Action<int, bool>(ClientStartedMission);
 
             Tick += OnTick;
         }
@@ -58,6 +60,11 @@ namespace Freeroam.Menus
                     TriggerEvent(Events.MISSION_START, missionName);
                 }
             };
+        }
+
+        private void ClientStartedMission(int handle, bool state)
+        {
+            missionRunning = state;
         }
 
         private async Task OnTick()
