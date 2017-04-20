@@ -31,6 +31,7 @@ namespace Freeroam.Menus
 
             AddMissionsMenu();
 
+            EventHandlers[Events.MISSION_STOP] += new Action<bool>(success => missionCooldown = MISSION_COOLDOWN_SECS);
             EventHandlers[Events.MISSION_RUNNING] += new Action<string, bool>(ClientStartedMission);
 
             Tick += OnTick;
@@ -56,7 +57,6 @@ namespace Freeroam.Menus
                 else
                 {
                     missionsMenu.Visible = false;
-                    missionCooldown = MISSION_COOLDOWN_SECS;
 
                     string missionName = item.Text;
                     TriggerEvent(Events.MISSION_START, missionName);
