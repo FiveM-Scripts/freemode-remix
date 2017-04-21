@@ -1,6 +1,7 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
+using System;
 using System.Threading.Tasks;
 using static CitizenFX.Core.BaseScript;
 
@@ -8,6 +9,12 @@ namespace Freeroam.Utils
 {
     static class Util
     {
+        public static float GetRandomFloat(Random random, double min, double max)
+        {
+            double rand = random.NextDouble() * (max - min) + min;
+            return (float)rand;
+        }
+
         public static uint GetHashKey(string name)
         {
             return Function.Call<uint>(Hash.GET_HASH_KEY, name);

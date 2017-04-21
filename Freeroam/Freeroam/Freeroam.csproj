@@ -67,7 +67,6 @@
     <Compile Include="Players\PlayerBlips.cs" />
     <Compile Include="Players\Spawning.cs" />
     <Compile Include="Scoreboard.cs" />
-    <Compile Include="Shops\HeliRent.cs" />
     <Compile Include="Utils\CachedPlayers.cs" />
     <Compile Include="Utils\Counter.cs" />
     <Compile Include="Utils\EntityDecoration.cs" />
@@ -79,7 +78,9 @@
     <Compile Include="Utils\TypeExtensions.cs" />
     <Compile Include="Utils\Util.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Shops\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

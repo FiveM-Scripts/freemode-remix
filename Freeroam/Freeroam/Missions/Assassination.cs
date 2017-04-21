@@ -36,11 +36,12 @@ namespace Freeroam.Missions
 
         public async void Start()
         {
+            Random random = new Random();
             for (int i = 0; i < targets.Length - 1; i++)
             {
                 Ped targetPed = await Util.CreatePed(PedHash.Business01AMY, targetSpawns[i]);
                 RandomAction(targetPed);
-                Ped[] bodyguards = await SpawnBodyguards(targetPed);
+                Ped[] bodyguards = await SpawnBodyguards(targetPed, random.Next(1, 4));
 
                 Function.Call(Hash.FLASH_MINIMAP_DISPLAY);
 
@@ -121,24 +122,26 @@ namespace Freeroam.Missions
             else ped.Task.WanderAround();
         }
 
-        private async Task<Ped[]> SpawnBodyguards(Ped ped)
+        private async Task<Ped[]> SpawnBodyguards(Ped targetPed, int amount)
         {
             PedGroup group = new PedGroup();
-            group.Add(ped, true);
+            group.Add(targetPed, true);
 
             RelationshipGroup relationship = World.AddRelationshipGroup("_ASSASSIN_PEDS");
             relationship.SetRelationshipBetweenGroups(new RelationshipGroup(Util.GetHashKey("COP")), Relationship.Respect, true);
-            ped.RelationshipGroup = relationship;
+            targetPed.RelationshipGroup = relationship;
 
             Random random = new Random();
-            int amount = random.Next(0, 4);
             Ped[] bodyguards = new Ped[amount];
             for (int i = 0; i < amount; i++)
             {
-                Vector3 spawnPos = new Vector3(random.Next(-5, 5), random.Next(-5, 5), random.Next(-5, 5));
+                float x = Util.GetRandomFloat(random, -2, 2);
+                float y = Util.GetRandomFloat(random, -2, 2);
+                Vector3 spawnPos = targetPed.GetOffsetPosition(new Vector3(x, y, 0f));
                 Ped bodyguard = await Util.CreatePed(PedHash.Bouncer01SMM, spawnPos);
                 bodyguard.Armor = 100;
                 bodyguard.Weapons.Give(WeaponHash.CarbineRifle, int.MaxValue, true, true);
+                bodyguard.Task.FollowToOffsetFromEntity(targetPed, new Vector3(), int.MaxValue, 1f);
 
                 bodyguard.RelationshipGroup = relationship;
                 group.Add(bodyguard, false);
