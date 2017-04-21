@@ -74,8 +74,8 @@ namespace Freeroam.Missions
             else
             {
                 Screen.ShowNotification(Strings.MISSIONS_ASSASSINATION_ALLTARGETSKILLED);
-                BaseScript.TriggerEvent(Events.MONEY_ADD, 350);
-                BaseScript.TriggerEvent(Events.XP_ADD, 13);
+                BaseScript.TriggerEvent(Events.MONEY_ADD, 500);
+                BaseScript.TriggerEvent(Events.XP_ADD, 15);
             }
         }
 
@@ -142,6 +142,7 @@ namespace Freeroam.Missions
                 bodyguard.Armor = 100;
                 bodyguard.Weapons.Give(WeaponHash.CarbineRifle, int.MaxValue, true, true);
                 bodyguard.Task.FollowToOffsetFromEntity(targetPed, new Vector3(), int.MaxValue, 1f);
+                bodyguard.AlwaysKeepTask = true;
 
                 bodyguard.RelationshipGroup = relationship;
                 group.Add(bodyguard, false);

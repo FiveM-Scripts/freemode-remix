@@ -8,3 +8,8 @@ D:\Emre\FiveReborn\servers\FiveReborn\servers\DMServer\resources\freeroam\Freero
 D:\Emre\FiveReborn\servers\DMServer\resources\freeroam\Freeroam\Freeroam\obj\Debug\Freeroam.csprojResolveAssemblyReference.cache
 D:\Emre\FiveReborn\servers\DMServer\resources\freeroam\Freeroam\Freeroam\obj\Debug\Freeroam.net.dll
 D:\Emre\FiveReborn\servers\DMServer\resources\freeroam\Freeroam\Freeroam\obj\Debug\Freeroam.net.pdb
+C:\Users\Emre\FiveM\TestingServer\resources\freeroam\Freeroam\Freeroam\obj\Debug\Freeroam.csprojResolveAssemblyReference.cache
+C:\Users\Emre\FiveM\TestingServer\resources\freeroam\Freeroam\Freeroam\obj\Debug\Freeroam.net.dll
+C:\Users\Emre\FiveM\TestingServer\resources\freeroam\Freeroam\Freeroam\obj\Debug\Freeroam.net.pdb
+C:\Users\Emre\FiveM\TestingServer\resources\freeroam\Freeroam.net.dll
+C:\Users\Emre\FiveM\TestingServer\resources\freeroam\Freeroam.net.pdb
