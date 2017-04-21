@@ -37,10 +37,10 @@ namespace Freeroam.Missions
         public async void Start()
         {
             Random random = new Random();
-            for (int i = 0; i < targets.Length - 1; i++)
+            for (int i = 0; i < targets.Length; i++)
             {
                 Ped targetPed = await Util.CreatePed(PedHash.Business01AMY, targetSpawns[i]);
-                RandomAction(targetPed);
+                targetPed.Task.StartScenario("WORLD_HUMAN_AA_SMOKE", targetPed.Position);
                 Ped[] bodyguards = await SpawnBodyguards(targetPed, random.Next(1, 4));
 
                 Function.Call(Hash.FLASH_MINIMAP_DISPLAY);
@@ -115,20 +115,16 @@ namespace Freeroam.Missions
             await Task.FromResult(0);
         }
 
-        private void RandomAction(Ped ped)
-        {
-            int actionChoice = new Random().Next(0, 101);
-            if (actionChoice < 50) ped.Task.StartScenario("WORLD_HUMAN_AA_SMOKE", ped.Position);
-            else ped.Task.WanderAround();
-        }
-
         private async Task<Ped[]> SpawnBodyguards(Ped targetPed, int amount)
         {
             PedGroup group = new PedGroup();
             group.Add(targetPed, true);
+            group.FormationType = FormationType.Default;
+            group.SeparationRange = 1f;
 
-            RelationshipGroup relationship = World.AddRelationshipGroup("_ASSASSIN_PEDS");
+            RelationshipGroup relationship = World.AddRelationshipGroup("_ASSASSIN_TARGETS");
             relationship.SetRelationshipBetweenGroups(new RelationshipGroup(Util.GetHashKey("COP")), Relationship.Respect, true);
+            relationship.SetRelationshipBetweenGroups(new RelationshipGroup(Util.GetHashKey("SECURITY_GUARD")), Relationship.Respect, true);
             targetPed.RelationshipGroup = relationship;
 
             Random random = new Random();
@@ -138,15 +134,13 @@ namespace Freeroam.Missions
                 float x = Util.GetRandomFloat(random, -2, 2);
                 float y = Util.GetRandomFloat(random, -2, 2);
                 Vector3 spawnPos = targetPed.GetOffsetPosition(new Vector3(x, y, 0f));
-                Ped bodyguard = await Util.CreatePed(PedHash.Bouncer01SMM, spawnPos);
+                Ped bodyguard = await Util.CreatePed(PedHash.FibOffice01SMM, spawnPos);
                 bodyguard.Armor = 300;
                 bodyguard.Weapons.Give(WeaponHash.CarbineRifle, int.MaxValue, true, true);
 
-                bodyguard.RelationshipGroup = relationship;
+                bodyguard.RelationshipGroup = new RelationshipGroup(Util.GetHashKey("SECURITY_GUARD"));
                 group.Add(bodyguard, false);
 
-                bodyguard.Task.FollowToOffsetFromEntity(targetPed, Vector3.Zero, float.MaxValue, int.MaxValue, 0f, true);
-                bodyguard.AlwaysKeepTask = true;
                 bodyguards[i] = bodyguard;
             }
 
