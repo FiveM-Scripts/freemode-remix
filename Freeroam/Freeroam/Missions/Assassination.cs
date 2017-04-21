@@ -141,7 +141,7 @@ namespace Freeroam.Missions
                 Ped bodyguard = await Util.CreatePed(PedHash.Bouncer01SMM, spawnPos);
                 bodyguard.Armor = 100;
                 bodyguard.Weapons.Give(WeaponHash.CarbineRifle, int.MaxValue, true, true);
-                bodyguard.Task.FollowToOffsetFromEntity(targetPed, new Vector3(), int.MaxValue, 1f);
+                bodyguard.Task.FollowToOffsetFromEntity(targetPed, new Vector3(), 99999, 1f);
                 bodyguard.AlwaysKeepTask = true;
 
                 bodyguard.RelationshipGroup = relationship;

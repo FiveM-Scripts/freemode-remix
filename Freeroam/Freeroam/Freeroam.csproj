@@ -63,6 +63,7 @@
     <Compile Include="Menus\PhoneMenu.cs" />
     <Compile Include="Missions\Assassination.cs" />
     <Compile Include="Missions\Mission.cs" />
+    <Compile Include="Missions\MissionMusic.cs" />
     <Compile Include="Players\JoinNotification.cs" />
     <Compile Include="Players\PlayerBlips.cs" />
     <Compile Include="Players\Spawning.cs" />
