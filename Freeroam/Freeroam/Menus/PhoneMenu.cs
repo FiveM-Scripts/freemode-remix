@@ -72,7 +72,7 @@ namespace Freeroam.Menus
         private async Task OnTick()
         {
             menuPool.ProcessMenus();
-            if (Game.IsControlJustReleased(1, Control.Phone) && !interactionMenu.Visible)
+            if (Game.IsControlJustReleased(1, Control.ReplayStartpoint) && !interactionMenu.Visible)
             {
                 interactionMenu.Visible = !interactionMenu.Visible;
             }
