@@ -139,7 +139,7 @@ namespace Freeroam.Missions
                 float y = Util.GetRandomFloat(random, -2, 2);
                 Vector3 spawnPos = targetPed.GetOffsetPosition(new Vector3(x, y, 0f));
                 Ped bodyguard = await Util.CreatePed(PedHash.Bouncer01SMM, spawnPos);
-                bodyguard.Armor = 100;
+                bodyguard.Armor = 300;
                 bodyguard.Weapons.Give(WeaponHash.CarbineRifle, int.MaxValue, true, true);
                 bodyguard.Task.FollowToOffsetFromEntity(targetPed, new Vector3(), 99999, 1f);
                 bodyguard.AlwaysKeepTask = true;
