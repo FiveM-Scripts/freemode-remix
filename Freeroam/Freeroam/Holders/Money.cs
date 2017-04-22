@@ -111,8 +111,7 @@ namespace Freeroam.Holders
 
         private void UpdateMoneyDecor()
         {
-            if (Game.PlayerPed != null && !EntityDecoration.ExistOn(Game.PlayerPed, PNAME_MONEY)
-                || EntityDecoration.Get<int>(Game.PlayerPed, PNAME_MONEY) != MONEY)
+            if (Game.PlayerPed != null)
             {
                 EntityDecoration.Set(Game.PlayerPed, PNAME_MONEY, MONEY);
             }

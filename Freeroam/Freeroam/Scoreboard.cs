@@ -5,6 +5,7 @@ using Freeroam.Holders;
 using Freeroam.Utils;
 using NativeUI;
 using System.Drawing;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Freeroam
@@ -54,8 +55,7 @@ namespace Freeroam
             UIResRectangle titleRec = new UIResRectangle(new PointF(POS_X, POS_Y), new SizeF(SCOREBOARD_LENGTH, TITLE_HEIGHT), Color.FromArgb(220, 0, 0, 0));
             titleRec.Draw();
 
-            int playerAmount = 0;
-            foreach (Player player in Players) playerAmount++;
+            int playerAmount = Players.Count();
             UIResText titleText = new UIResText($"{playerAmount} Players", new PointF(POS_X + 5f, POS_Y + 2f), 0.4f);
             titleText.Draw();
         }

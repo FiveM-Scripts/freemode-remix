@@ -83,8 +83,7 @@ namespace Freeroam.Holders
 
         private void UpdateLevelDecor()
         {
-            if (Game.PlayerPed != null && !EntityDecoration.ExistOn(Game.PlayerPed, PNAME_LEVEL)
-                || EntityDecoration.Get<int>(Game.PlayerPed, PNAME_LEVEL) != LVL)
+            if (Game.PlayerPed != null)
             {
                 EntityDecoration.Set(Game.PlayerPed, PNAME_LEVEL, LVL);
             }

@@ -45,15 +45,19 @@
         public const string PHONEMENU_MISSIONS_MISSIONSTOPPED = "{0} finished a mission.";
         public const string PHONEMENU_MISSIONS_MISSIONCOOLDOWN = "You have to wait {0} seconds until you can start another mission.";
 
+        public const string PHONEMENU_PLAYERLIST_MENU = "Players";
+
         /* MISSIONS */
 
         public const string MISSIONS_FAIL = "~r~Mission failed.";
 
+        public const string MISSIONS_ASSASSINATION_NAME = "Assassination";
+        public const string MISSIONS_ASSASSINATION_DESC = "Get rid of a few people throughout Los Santos.";
         public const string MISSIONS_ASSASSINATION_START = "Take out the ~r~targets~w~.";
         public const string MISSIONS_ASSASSINATION_BLIP = "Target";
         public const string MISSIONS_ASSASSINATION_INFO = "The ~r~targets~w~ are being constantly watched by their bodyguards " +
             "and the police, so you will have to likely deal with them. Also once you die the mission counts as failed.";
-        public const string MISSIONS_ASSASSINATION_TARGETKILLED = "You killed a ~r~target~w~.";
-        public const string MISSIONS_ASSASSINATION_ALLTARGETSKILLED = "You assassinated all ~r~targets~w~.";
+        public const string MISSIONS_ASSASSINATION_TARGETKILLED = "A ~r~target~w~ has been assassinated.";
+        public const string MISSIONS_ASSASSINATION_ALLTARGETSKILLED = "All ~r~targets~w~ were assassinated.";
     }
 }

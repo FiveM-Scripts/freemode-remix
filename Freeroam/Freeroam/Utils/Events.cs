@@ -6,6 +6,8 @@
         public const string PLAYER_JOINED = "freeroam:playerjoined";
         public const string PLAYER_LEFT = "freeroam:playerleft";
 
+        public const string PLAYERSPAWNED = "playerSpawned";
+
         public const string MONEY_ADD = "freeroam:addmoney";
         public const string MONEY_REMOVE = "freeroam:removemoney";
 

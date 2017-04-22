@@ -1,5 +1,6 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.UI;
+using Freeroam.Missions;
 using Freeroam.Utils;
 using NativeUI;
 using System;
@@ -17,6 +18,8 @@ namespace Freeroam.Menus
 
         private MenuPool menuPool;
         private UIMenu interactionMenu;
+        private UIMenu playerListMenu;
+        private UIMenu missionsMenu;
 
         private bool missionRunning = false;
         private static int missionCooldown;
@@ -29,6 +32,7 @@ namespace Freeroam.Menus
             interactionMenu.SetBannerType(phoneTitle);
             menuPool.Add(interactionMenu);
 
+            AddPlayerListMenu();
             AddMissionsMenu();
 
             EventHandlers[Events.MISSION_STOP] += new Action<bool>(success => missionCooldown = MISSION_COOLDOWN_SECS);
@@ -37,16 +41,31 @@ namespace Freeroam.Menus
             Tick += OnTick;
         }
 
+        private void AddPlayerListMenu()
+        {
+            playerListMenu = AddSubMenu(Strings.PHONEMENU_PLAYERLIST_MENU);
+        }
+
+        private void UpdatePlayerListMenu()
+        {
+            if (playerListMenu.MenuItems.Count() != Players.Count())
+            {
+                playerListMenu.Clear();
+                foreach (Player player in Players)
+                {
+                    UIMenuItem playerItem = new UIMenuItem(player.Name);
+                    playerListMenu.AddItem(playerItem);
+                }
+            }
+        }
+
         private void AddMissionsMenu()
         {
-            UIMenu missionsMenu = menuPool.AddSubMenu(interactionMenu, Strings.PHONEMENU_MISSIONS_MENU);
-            missionsMenu.SetBannerType(phoneTitle);
+            missionsMenu = AddSubMenu(Strings.PHONEMENU_MISSIONS_MENU);
 
-            IEnumerable<string> missionNames = TypeExtensions.GetConstantsValues<string>(typeof(Missions.Missions));
-            missionNames.OrderBy(s => s); // Sort alphabetically
-            foreach (string missionName in missionNames)
+            foreach (MissionItem mission in Mission.MISSIONS)
             {
-                UIMenuItem missionItem = new UIMenuItem(missionName);
+                UIMenuItem missionItem = new UIMenuItem(mission.NAME);
                 missionsMenu.AddItem(missionItem);
             }
 
@@ -64,6 +83,13 @@ namespace Freeroam.Menus
             };
         }
 
+        private UIMenu AddSubMenu(string name)
+        {
+            UIMenu menu = menuPool.AddSubMenu(interactionMenu, name);
+            menu.SetBannerType(phoneTitle);
+            return menu;
+        }
+
         private void ClientStartedMission(int clientHandle, bool state)
         {
             missionRunning = state;
@@ -76,6 +102,8 @@ namespace Freeroam.Menus
             {
                 interactionMenu.Visible = !interactionMenu.Visible;
             }
+
+            if (playerListMenu.Visible) UpdatePlayerListMenu();
 
             await Task.FromResult(0);
          }

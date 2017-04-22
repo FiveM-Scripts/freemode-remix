@@ -66,6 +66,7 @@
     <Compile Include="Missions\MissionMusic.cs" />
     <Compile Include="Players\JoinNotification.cs" />
     <Compile Include="Players\PlayerBlips.cs" />
+    <Compile Include="Players\PvP.cs" />
     <Compile Include="Players\Spawning.cs" />
     <Compile Include="Scoreboard.cs" />
     <Compile Include="Utils\CachedPlayers.cs" />

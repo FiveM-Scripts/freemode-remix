@@ -3,6 +3,7 @@ using CitizenFX.Core.UI;
 using Freeroam.Utils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Freeroam.Missions
@@ -14,16 +15,25 @@ namespace Freeroam.Missions
         Task Tick();
     }
 
-    static class Missions
+    internal struct MissionItem
     {
-        public const string ASSASSINATION = "Assassination";
+        public string NAME { get; private set; }
+        public string DESC { get; private set; }
+        public Type MISSION { get; private set; }
+
+        public MissionItem(string name, string desc, Type mission)
+        {
+            NAME = name;
+            DESC = desc;
+            MISSION = mission;
+        }
     }
 
     class Mission : BaseScript
     {
-        private static Dictionary<string, Type> missions = new Dictionary<string, Type>()
+        public static MissionItem[] MISSIONS { get; } = new MissionItem[]
         {
-            [Missions.ASSASSINATION] = typeof(Assassination)
+            new MissionItem(Strings.MISSIONS_ASSASSINATION_NAME, Strings.MISSIONS_ASSASSINATION_DESC, typeof(Assassination))
         };
 
         public static IMission CURRENT_MISSION { get; private set; }
@@ -49,12 +59,9 @@ namespace Freeroam.Missions
 
                 if (Game.PlayerPed != null)
                 {
-                    Type challenge;
-                    if (missions.TryGetValue(missionKey, out challenge))
-                    {
-                        CURRENT_MISSION = (IMission)Activator.CreateInstance(challenge);
-                        CURRENT_MISSION.Start();
-                    }
+                    MissionItem missionItem = MISSIONS.Where(i => i.NAME == missionKey).First();
+                    CURRENT_MISSION = (IMission)Activator.CreateInstance(missionItem.MISSION);
+                    CURRENT_MISSION.Start();
                 }
             }
         }

@@ -74,8 +74,8 @@ namespace Freeroam.Missions
             else
             {
                 Screen.ShowNotification(Strings.MISSIONS_ASSASSINATION_ALLTARGETSKILLED);
-                BaseScript.TriggerEvent(Events.MONEY_ADD, 500);
-                BaseScript.TriggerEvent(Events.XP_ADD, 15);
+                BaseScript.TriggerEvent(Events.MONEY_ADD, 1000);
+                BaseScript.TriggerEvent(Events.XP_ADD, 20);
             }
         }
 
@@ -100,7 +100,7 @@ namespace Freeroam.Missions
                             {
                                 Screen.ShowNotification(Strings.MISSIONS_ASSASSINATION_TARGETKILLED);
 
-                                if (Game.Player.WantedLevel < 3) Game.Player.WantedLevel = 3;
+                                if (targets[i].targetPed.GetKiller() == Game.PlayerPed && Game.Player.WantedLevel < 3) Game.Player.WantedLevel = 3;
 
                                 DespawnTargetSquad(targets[i]);
                                 targets[i] = null;
