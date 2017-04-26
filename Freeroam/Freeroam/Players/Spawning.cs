@@ -8,6 +8,18 @@ namespace Freeroam.Players
 {
     class Spawning : BaseScript
     {
+        /**
+              __________  ____  ____ 
+             /_  __/ __ \/ __ \/ __ \
+              / / / / / / / / / / / /
+             / / / /_/ / /_/ / /_/ / 
+            /_/  \____/_____/\____/  
+
+            Make this non-hacky and override spawnmanager
+                         
+         */
+
+
         private Vector3 prevPos = Vector3.Zero;
         private bool posAlreadyFetched = false;
 

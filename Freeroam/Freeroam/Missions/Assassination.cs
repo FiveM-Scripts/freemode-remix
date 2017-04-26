@@ -83,7 +83,9 @@ namespace Freeroam.Missions
         {
             if (enableTick)
             {
-                if (Game.PlayerPed.IsDead)
+                Ped playerPed = Game.PlayerPed;
+
+                if (playerPed.IsDead)
                 {
                     BaseScript.TriggerEvent(Events.MISSION_STOP, false);
                     enableTick = false;
@@ -100,8 +102,13 @@ namespace Freeroam.Missions
                             {
                                 Screen.ShowNotification(Strings.MISSIONS_ASSASSINATION_TARGETKILLED);
 
-                                Entity killer = targets[i].targetPed.GetKiller();
-                                if ((killer == Game.PlayerPed || killer == Game.PlayerPed.CurrentVehicle) && Game.Player.WantedLevel < 3) Game.Player.WantedLevel = 3;
+                                int killerHandle = targets[i].targetPed.GetKiller().Handle;
+
+                                if (killerHandle == playerPed.Handle
+                                    || (playerPed.CurrentVehicle != null && killerHandle == playerPed.CurrentVehicle.Handle))
+                                {
+                                    if (Game.Player.WantedLevel < 3) Game.Player.WantedLevel = 3;
+                                }
 
                                 DespawnTargetSquad(targets[i]);
                                 targets[i] = null;
