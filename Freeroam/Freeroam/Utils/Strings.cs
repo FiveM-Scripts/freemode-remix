@@ -51,12 +51,12 @@
 
         public const string MISSIONS_FAIL = "~r~Mission failed.";
 
-        public const string MISSIONS_ASSASSINATION_NAME = "Assassination";
+        public const string MISSIONS_ASSASSINATION_NAME = "Bounty Hunter";
         public const string MISSIONS_ASSASSINATION_DESC = "Get rid of a few people throughout Los Santos.";
         public const string MISSIONS_ASSASSINATION_START = "Take out the ~r~targets~w~.";
         public const string MISSIONS_ASSASSINATION_BLIP = "Target";
-        public const string MISSIONS_ASSASSINATION_INFO = "The ~r~targets~w~ are being constantly watched by their bodyguards " +
-            "and the police, so you will have to likely deal with them. Also once you die the mission counts as failed.";
+        public const string MISSIONS_ASSASSINATION_INFO = "The ~r~targets~w~ are secured by their security " +
+            "and the police. Plan your actions if you want to succeed.";
         public const string MISSIONS_ASSASSINATION_TARGETKILLED = "A ~r~target~w~ has been assassinated.";
         public const string MISSIONS_ASSASSINATION_ALLTARGETSKILLED = "All ~r~targets~w~ were assassinated.";
     }

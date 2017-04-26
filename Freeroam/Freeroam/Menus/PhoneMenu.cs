@@ -66,6 +66,7 @@ namespace Freeroam.Menus
             foreach (MissionItem mission in Mission.MISSIONS)
             {
                 UIMenuItem missionItem = new UIMenuItem(mission.NAME);
+                missionItem.Description = mission.DESC;
                 missionsMenu.AddItem(missionItem);
             }
 
