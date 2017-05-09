@@ -102,10 +102,9 @@ namespace Freeroam.Missions
                             {
                                 Screen.ShowNotification(Strings.MISSIONS_ASSASSINATION_TARGETKILLED);
 
-                                int killerHandle = targets[i].targetPed.GetKiller().Handle;
+                                Entity killer = targets[i].targetPed.GetKiller();
 
-                                if (killerHandle == playerPed.Handle
-                                    || (playerPed.CurrentVehicle != null && killerHandle == playerPed.CurrentVehicle.Handle))
+                                if (killer == playerPed)
                                 {
                                     if (Game.Player.WantedLevel < 3) Game.Player.WantedLevel = 3;
                                 }

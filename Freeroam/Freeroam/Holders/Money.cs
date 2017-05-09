@@ -93,7 +93,7 @@ namespace Freeroam.Holders
         private void DrawMoneyChangeText()
         {
             UIResText moneyChangeText = new UIResText("", new PointF(320f, 995f), 0.5f, Color.Empty,
-                Font.ChaletComprimeCologne, UIResText.Alignment.Left);
+                Font.Pricedown, UIResText.Alignment.Left);
 
             if (moneyChangeTextAmount > 0)
             {
