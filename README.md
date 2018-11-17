@@ -1,4 +1,8 @@
-# freemode-remix
+# Abandoned, please use [venomous-freemode](https://github.com/FiveM-Scripts/venomous-freemode) instead.
+
+Old:
+
+## freemode-remix
 Alternative Freeroam Gamemode that works without any Database. Aims to be kinda like GTA:O Freemode.
 
 **Installation:**
